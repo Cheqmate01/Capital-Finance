@@ -1,36 +1,35 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import FooterLink from './components/templates/FooterLinks.vue';
 </script>
 
 <template>
-  <header>
-    <div>
-      <div>
-        <h1>Capital</h1>
-        <p>finance</p>
+  <header class="fixed top-0 left-0 w-full bg-black text-white z-50 p-5">
+    <div class="flex flex-row justify-between gap-4 p-4">
+      <div class="flex flex-row items-baseline">
+        <h1 class="vollkorn-700 text-xl">Standard</h1>
+        <p>capitalfinance</p>
       </div>
-      <div>
+      <div class="flex flex-row gap-4 float-right">
         <button>Sign up</button>
         <button>Log in</button>
       </div>
     </div>
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+    <div class="">
+      <nav class="flex flex-row justify-center gap-4 text-lg">
+        <RouterLink to="/" class="transform transition duration-300 hover:-translate-x-1 ease-in-out hover:text-green-400">Home</RouterLink><span>|</span>
+        <RouterLink to="/about" class="transform transition duration-300 hover:translate-x-1 ease-in-out hover:text-green-400">About</RouterLink>
       </nav>
     </div>
   </header>
 
-  <RouterView />
+  <main style="margin-top: 150px;">
+    <RouterView />
+  </main>
 
-  <footer class="w-full">
+  <footer class="w-full bg-black text-gray-400">
     <div class="">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="#ffffff" fill-opacity="1"
@@ -39,16 +38,14 @@ import FooterLink from './components/templates/FooterLinks.vue';
       </svg>
     </div>
 
-    <div class="m-auto flex flex-col gap-10 py-28">
+    <div class="m-auto flex flex-col gap-10 pt-28">
       <div class="w-fit m-auto flex flex-row flex-wrap-reverse justify-center-safe gap-6">
         <div class="w-1/3 flex-none">
           <FooterLink text="Company">
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">About Us</h3>
             </template>
-            <p>Capital Finnance is a leading investment and asset management company dedicated to providing premium financial solutions to individual and corporate investors. With a deep understanding of global markets and a commitment to excellence, we deliver tailored investment strategies designed to meet the unique goals of our clients.
-
-</p>
+            <p>Standard Capital Finnance is a leading investment and asset management company dedicated to providing premium financial solutions to individual and corporate investors.</p>
             <!--ul class="social-media-links d-flex align-items-center mt-3">
                               <li>
                   <a href="https://bd.linkedin.com/" target="_blank">
@@ -74,22 +71,22 @@ import FooterLink from './components/templates/FooterLinks.vue';
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Quick Links</h3>
             </template>
-            <ul class="flex flex-col gap-y-1">
-              <li><a href="../?a=login" class="text-shadow-blue-400">Login</a></li><hr>
-              <li><a href="../?a=signup" class="text-shadow-blue-400">Register</a></li><hr>
-              <li><a href="index15a0.html?a=support" class="text-shadow-blue-400">Contact</a></li><hr>
+            <ul class="flex flex-col gap-y-3">
+              <li><a href="../?a=login" class="text-white text-sm hover:text-green-400 nav-link">Login</a></li>
+              <li><a href="../?a=signup" class="text-white text-sm hover:text-green-400 nav-link">Register</a></li>
+              <li><a href="index15a0.html?a=support" class="text-white text-sm hover:text-green-400 nav-link">Contact</a></li>
             </ul>
           </FooterLink>
         </div>
         <div class="flex-none">
           <FooterLink>
             <template #heading>
-              <h3 class="vollkorn-700 text-white text-2xl">Page</h3>
+              <h3 class="vollkorn-700 text-white text-2xl">Pages</h3>
             </template>
-            <ul class="flex flex-col gap-y-1">
-              <li><a href="index3e24.html?a=company-policy" class="text-shadow-blue-400">Company Policy</a></li><hr>
-              <li><a href="indexa972.html?a=rules" class="text-shadow-blue-400">Terms of Services</a></li><hr>
-              <li><a href="indexff70.html?a=privacy-policy" class="text-shadow-blue-400">Privacy Policy</a></li><hr>
+            <ul class="flex flex-col gap-y-3">
+              <li><a href="index3e24.html?a=company-policy" class="text-white text-sm hover:text-green-400 nav-link">Company Policy</a></li>
+              <li><a href="indexa972.html?a=rules" class="text-white text-sm hover:text-green-400 nav-link">Terms of Service</a></li>
+              <li><a href="indexff70.html?a=privacy-policy" class="text-white text-sm hover:text-green-400 nav-link">Privacy Policy</a></li>
             </ul>
           </FooterLink>
         </div>
@@ -99,18 +96,17 @@ import FooterLink from './components/templates/FooterLinks.vue';
               <h3 class="vollkorn-700 text-white text-2xl">Contact Us</h3>
             </template>
             <ul class="">
-              <li>
-                <i class="fas fa-location-arrow"></i>
-                <p>Hygiëastraat 10 1076 RM Amsterdam, Netherlands.</p>
+              <li class="grid grid-cols-5">
+                <font-awesome-icon icon="fa-solid fa-location-dot" class="my-auto text-green-400" />
+                <p class="col-span-4">Hygiëastraat 10 1076 RM Amsterdam, Netherlands.</p>
               </li>
-              <li>
-                <i class="fas fa-envelope"></i>
-                <p>support@fxturboinvest.org</p>
+              <li class="grid grid-cols-5">
+                <font-awesome-icon icon="fa-solid fa-envelope" class="my-auto text-green-400" />
+                <p class="col-span-4 my-auto">support@fxturboinvest.org</p>
               </li>
-              <li>
-                <i class="fas fa-download"></i> <a href="images/nedvesttrust.pdf" download="images/nedvesttrust.pdf">
-                  <span>Download Company PDF</span></a>
-
+              <li class="grid grid-cols-5">
+                <font-awesome-icon icon="fa-solid fa-download" class="my-auto text-green-400" />
+                <a href="images/nedvesttrust.pdf" class="text-white text-sm col-span-4 my-auto hover:text-green-400 nav-link" download="images/nedvesttrust.pdf"><span>Download Company PDF</span></a>
               </li>
             </ul>
           </FooterLink>
@@ -118,12 +114,12 @@ import FooterLink from './components/templates/FooterLinks.vue';
       </div>
       <div class="">
         <div class="">
-          <div class="col-lg-3 col-sm-6 order-lg-1 order-1 text-sm-start text-center">
+          <div class="text-center">
             <!-- <a href="../?a=home" class="footer-logo"><img src="assets/images/logoIcon/logo.png" alt="logo"></a> -->
           </div>
-
-          <div class="col-lg-9 col-sm-6 order-lg-3 order-2 text-sm-end text-center">
-            <p>Copyright © 2024 fxturboinvest.org. All Rights Reserved</p>
+          <hr class="border-gray-900 mx-10">
+          <div class="flex flex-row mx-12">
+            <p class="my-8">Copyright © 2024 standardcapitalfinance.org. All Rights Reserved</p>
           </div>
         </div>
       </div>

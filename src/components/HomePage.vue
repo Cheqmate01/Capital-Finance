@@ -1,96 +1,59 @@
-<script setup>
-import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
-
-const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
-</script>
-
-<template>
-
-  <WelcomeItem>
-    <template #icon>
-      <DocumentationIcon />
-    </template>
-    <template #heading>Documentation</template>
-
-    Vue’s
-    <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
-    provides you with all information you need to get started.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <ToolingIcon />
-    </template>
-    <template #heading>Tooling</template>
-
-    This project is served and bundled with
-    <a href="https://vite.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
-    recommended IDE setup is
-    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a>
-    +
-    <a href="https://github.com/vuejs/language-tools" target="_blank" rel="noopener"
-      >Vue - Official</a
-    >. If you need to test your components and web pages, check out
-    <a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest</a>
-    and
-    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>
-    /
-    <a href="https://playwright.dev/" target="_blank" rel="noopener">Playwright</a>.
-
-    <br />
-
-    More instructions are available in
-    <a href="javascript:void(0)" @click="openReadmeInEditor"><code>README.md</code></a
-    >.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <EcosystemIcon />
-    </template>
-    <template #heading>Ecosystem</template>
-
-    Get official tools and libraries for your project:
-    <a href="https://pinia.vuejs.org/" target="_blank" rel="noopener">Pinia</a>,
-    <a href="https://router.vuejs.org/" target="_blank" rel="noopener">Vue Router</a>,
-    <a href="https://test-utils.vuejs.org/" target="_blank" rel="noopener">Vue Test Utils</a>, and
-    <a href="https://github.com/vuejs/devtools" target="_blank" rel="noopener">Vue Dev Tools</a>. If
-    you need more resources, we suggest paying
-    <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
-    a visit.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <CommunityIcon />
-    </template>
-    <template #heading>Community</template>
-
-    Got stuck? Ask your question on
-    <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>
-    (our official Discord server), or
-    <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
-      >StackOverflow</a
-    >. You should also follow the official
-    <a href="https://bsky.app/profile/vuejs.org" target="_blank" rel="noopener">@vuejs.org</a>
-    Bluesky account or the
-    <a href="https://x.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
-    X account for latest news in the Vue world.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <SupportIcon />
-    </template>
-    <template #heading>Support Vue</template>
-
-    As an independent project, Vue relies on community backing for its sustainability. You can help
-    us by
-    <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
-  </WelcomeItem>
+<template style="margin-top: 150px; background-color: black;">
+  <div class="container mx-auto px-4 bg-black">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered = true" @mouseout="isHovered = false">
+        <div class="icon-container my-4 w-fit h-fit p-2 rounded-full mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered, 'bg-white': isHovered }">
+          <font-awesome-icon icon="fa-solid fa-user-check" :class="{ 'text-white': !isHovered, 'text-green-400': isHovered }" />
+        </div>
+        <h5 class="font-bold pt-16 mb-2">Register Your Account</h5>
+        <p>Create your account today to access a world of investment opportunities and financial insights.</p>
+      </div>
+      <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered1 = true" @mouseout="isHovered1 = false">
+        <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered1, 'bg-white': isHovered1 }">
+          <font-awesome-icon icon="fa-solid fa-clipboard-check" :class="{ 'text-white': !isHovered1, 'text-green-400': isHovered1 }" />
+        </div>
+        <h5 class="font-bold pt-16 mb-2">Choose Your Investment Plan</h5>
+        <p>Select from a variety of investment plans tailored to your financial goals and risk appetite.</p>
+      </div>
+      <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered2 = true" @mouseout="isHovered2 = false">
+        <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered2, 'bg-white': isHovered2 }">
+          <font-awesome-icon icon="fa-solid fa-chart-line" :class="{ 'text-white': !isHovered2, 'text-green-400': isHovered2 }" />
+        </div>
+        <h5 class="font-bold pt-16 mb-2">Watch Your Portfolio Grow</h5>
+        <p>Monitor your investments and watch your portfolio grow with our advanced tracking tools and insights.</p>
+      </div>
+    </div>
+  </div>
+  <!-- <div>
+    <div class="h-[250px] bg-black">
+      <iframe allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/crypto-mkt-screener/?locale=en#%7B%22defaultColumn%22%3A%22overview%22%2C%22screener_type%22%3A%22crypto_mkt%22%2C%22displayCurrency%22%3A%22USD%22%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%2C%22width%22%3A%22100%25%22%2C%22height%22%3A%22100%25%22%2C%22market%22%3A%22crypto%22%2C%22enableScrolling%22%3Atrue%2C%22utm_source%22%3A%22www.tradingview.com%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22cryptomktscreener%22%2C%22page-uri%22%3A%22www.tradingview.com%2Fwidget-docs%2Fwidgets%2Fscreeners%2Fcrypto-mkt-screener%2F%22%7D" title="crypto mkt-screener TradingView widget" lang="en" style="user-select: none; box-sizing: border-box; display: block; height: calc(100% - 32px); width: 100%;"></iframe>
+    </div>
+  </div> -->
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const isHovered = ref(false);
+const isHovered1 = ref(false);
+const isHovered2 = ref(false);
+</script> mb-2
+
+<style scoped>
+/* Add relative to the parent */
+.relative {
+    position:relative;
+}
+
+.icon-container {
+  position: absolute; /* Take it out of the normal flow */
+  top: 14%;            /* Initial vertical centering */
+  left: 50%;           /* Initial horizontal centering */
+  transform: translate(-50%, -50%); /* Precise centering */
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover .icon-container {
+  transform: translate(-50%, -50%) scale(1.2); /* Scale on hover */
+}
+</style>
