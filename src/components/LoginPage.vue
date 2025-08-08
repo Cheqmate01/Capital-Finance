@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { RouterLink } from 'vue-router';
 
 </script>
@@ -6,12 +6,12 @@ import { RouterLink } from 'vue-router';
 <template>
     <div class="bg-[url('/src/assets/AuthPages/AuthBackgroundSVG.png')] bg-cover bg-center bg-fixed min-h-screen">
         <RouterLink to="/">
-            <div class="absolute top-18 left-18 bg-white hover:bg-green-400 transition-all duration-300 rounded-full px-2 py-2.5">
+            <div class="fixed top-18 left-18 bg-white hover:bg-green-400 transition-all duration-300 rounded-full px-2 py-2.5">
                 <font-awesome-icon icon="fa-solid fa-arrow-left" class="text-2xl text-green-500" />
             </div>
         </RouterLink>
         <div class="flex justify-center">
-            <div class="bg-radial-[at_-295%_-295%] from-white to-gray-800 rounded-2xl shadow-xl p-8 pb-10 max-w-sm w-full border border-gray-700 my-32">
+            <div class="bg-radial-[at_-295%_-295%] from-white to-[] rounded-2xl shadow-xl p-8 pb-10 max-w-sm w-full border border-gray-700 my-32">
                 <div class="text-center mb-6">
                     <img src="https://via.placeholder.com/48x48/00C851/FFFFFF?text=Logo" alt="Company Logo" class="mx-auto h-12 w-12 mb-3">
                     <h1 class="text-2xl font-bold text-white">Create Account</h1>
