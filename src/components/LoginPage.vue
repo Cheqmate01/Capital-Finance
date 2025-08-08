@@ -1,6 +1,16 @@
+<script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
+</script>
+
 <template>
+    <RouterLink to="/">
+        <div class="absolute top-18 left-18 bg-white hover:bg-green-400 transition-all duration-300 rounded-full px-2 py-2.5">
+            <font-awesome-icon icon="fa-solid fa-arrow-left" class="text-2xl text-green-500" />
+        </div>
+    </RouterLink>
     <div class="flex justify-center">
-        <div class="bg-gray-800 rounded-2xl shadow-xl p-6 pb-10 max-w-sm w-full border border-gray-700 my-12">
+        <div class="bg-radial-[at_-295%_-295%] from-white to-gray-800 rounded-2xl shadow-xl p-8 pb-10 max-w-sm w-full border border-gray-700 my-32">
             <div class="text-center mb-6">
                 <img src="https://via.placeholder.com/48x48/00C851/FFFFFF?text=Logo" alt="Company Logo" class="mx-auto h-12 w-12 mb-3">
                 <h1 class="text-2xl font-bold text-white">Create Account</h1>
@@ -36,17 +46,22 @@
                     </button>
                 </div>
             </form>
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-400">
+                    Don't have an account? 
+                </p>
+                <RouterLink to="/signup" class="text-green-400 hover:text-green-500 font-medium">Sign Up</RouterLink>
+            </div>
+            <div class="flex items-center my-4">
+                <div class="flex-grow h-px bg-gray-600"></div>
+                <span class="mx-3 text-gray-400 text-sm font-medium">Or</span>
+                <div class="flex-grow h-px bg-gray-600"></div>
+            </div>
             <div class="m-auto py-3" data-onsuccess="onSignIn">
                 <button type="submit" class="w-full flex flex-row gap-3 justify-center bg-white hover:bg-green-700 text-black font-bold py-2.5 rounded-full transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-base">
                     <img src="@/assets/3c6496fed241f7335a665be353150cd4.png" class="w-5" alt="">
                     Sign In With Google
                 </button>
-            </div>
-            <div class="mt-4 text-center text-sm">
-                <p class="text-gray-400">
-                    Don't have an account? 
-                </p>
-                <a href="#" class="text-green-400 hover:text-green-500 font-medium">Sign Up</a>
             </div>
         </div>
     </div>

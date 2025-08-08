@@ -15,7 +15,7 @@
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">About Us</h3>
             </template>
-            <p>Standard Capital Finnance is a leading investment and asset management company dedicated to providing premium financial solutions to individual and corporate investors.</p>
+            <p>Standard Capital Finance is a leading investment and asset management company dedicated to providing premium financial solutions to individual and corporate investors.</p>
             <!--ul class="social-media-links d-flex align-items-center mt-3">
                               <li>
                   <a href="https://bd.linkedin.com/" target="_blank">

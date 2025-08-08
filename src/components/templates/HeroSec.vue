@@ -1,11 +1,11 @@
 <template>
     <div class="bg-[#070024] h-dvh text-white relative">
-        <img src="@/assets/HeaderSVG-1.png" class="absolute top-6 left-0 w-110" alt="">
+        <img src="@/assets/HeaderSVG-1.png" class="absolute top-10 left-1/12 w-110" alt="">
         <div class="w-fit m-auto text-center pt-24">
             <h1 class="text-5xl font-bold">Your Gateway to</h1>
             <h1 class="text-5xl font-bold">Global Investments</h1>
             <p class="mt-10">Achieve financial freedom starting today!</p>
-            <button class="bg-green-400 hover:bg-green-500 px-4 py-2 rounded-full mt-3">Start Investing Now</button>
+            <RouterLink to="/signup"><button class="bg-green-400 hover:bg-green-500 px-4 py-2 rounded-full mt-3 transition-colors duration-300 transition-discrete">Start Investing Now</button></RouterLink>
             <div class="mt-12 grid-cols-4 grid gap-4">
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
@@ -29,7 +29,7 @@
                 <!-- TradingView Widget END -->
             </div>
         </div>
-        <img src="@/assets/HeroSVG.png" class="absolute bottom-0" alt="">
+        <img src="@/assets/HeroSVG.png" class="absolute bottom-0 w-full" alt="">
     </div>
 </template>
 

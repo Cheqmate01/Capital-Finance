@@ -1,5 +1,10 @@
 <template>
-    <div class="bg-radial-[at_-295%_-295%] from-white to-gray-800 rounded-2xl shadow-xl p-6 max-w-sm w-full border border-gray-700 m-auto my-12">
+    <RouterLink to="/">
+        <div class="absolute top-18 left-18 bg-white hover:bg-green-400 transition-all duration-300 rounded-full px-2 py-2.5">
+            <font-awesome-icon icon="fa-solid fa-arrow-left" class="text-2xl text-green-500" />
+        </div>
+    </RouterLink>
+    <div class="bg-radial-[at_-295%_-295%] from-white to-gray-800 rounded-2xl shadow-xl p-8 max-w-sm w-full border border-gray-700 m-auto my-32">
         <div class="text-center mb-6">
             <img src="https://via.placeholder.com/48x48/00C851/FFFFFF?text=Logo" alt="Company Logo" class="mx-auto h-12 w-12 mb-3">
             <h1 class="text-2xl font-bold text-white">Create Account</h1>
@@ -48,11 +53,11 @@
                 </button>
             </div>
         </form>
-        <div class="mt-4 text-center text-sm">
+        <div class="mt-6 text-center text-sm">
             <p class="text-gray-400">
                 Already have an account? 
             </p>
-            <a href="#" class="text-green-400 hover:text-green-500 font-medium">Log in</a>
+            <RouterLink to="/login" class="text-green-400 hover:text-green-500 font-medium">Log in</RouterLink>
         </div>
     </div>
 </template>
