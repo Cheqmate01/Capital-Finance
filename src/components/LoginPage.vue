@@ -10,8 +10,8 @@ import { RouterLink } from 'vue-router';
                 <font-awesome-icon icon="fa-solid fa-arrow-left" class="text-2xl text-green-500" />
             </div>
         </RouterLink>
-        <div class="flex justify-center">
-            <div class="bg-radial-[at_-295%_-295%] from-white to-[] rounded-2xl shadow-xl p-8 pb-10 max-w-sm w-full border border-gray-700 my-32">
+        <div class="flex justify-center items-center min-h-screen">
+            <div class="bg-radial-[at_-295%_-295%] from-white to-[] rounded-2xl shadow-xl p-8 pb-10 max-w-sm w-full border border-gray-700">
                 <div class="text-center mb-6">
                     <img src="https://via.placeholder.com/48x48/00C851/FFFFFF?text=Logo" alt="Company Logo" class="mx-auto h-12 w-12 mb-3">
                     <h1 class="text-2xl font-bold text-white">Create Account</h1>
