@@ -2,8 +2,8 @@
   <header class="fixed top-0 left-0 w-full bg-black text-white z-50 p-5">
     <div class="flex flex-row justify-between gap-4 p-4">
       <div class="flex flex-row items-baseline py-1">
-        <h1 class="vollkorn-700 text-xl">Standard</h1>
-        <p>capitalfinance</p>
+        <h1 class="font-extrabold text-2xl">Standard</h1>
+        <p class="text-xl">capitalfinance</p>
       </div>
       <div class="flex flex-row gap-4 float-right">
         <RouterLink to="/login"><button class="bg-[#505050] hover:bg-green-400 border-2 hover:text-black px-5 py-1 rounded-full transition-all duration-300 transition-discrete">Sign In</button></RouterLink>
