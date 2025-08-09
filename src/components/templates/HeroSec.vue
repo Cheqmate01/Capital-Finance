@@ -75,4 +75,7 @@ export default {
     border: 1px solid #1d1930;
     border-radius: 8px;
 }
+.tradingview-widget-container__widget {
+    pointer-events: none;
+}
 </style>
