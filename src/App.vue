@@ -1,15 +1,17 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import HeaderConst from './components/HeaderConst.vue';
 import FooterConst from './components/FooterConst.vue';
+
+const route = useRoute();
 </script>
 
 <template>
-  <HeaderConst v-if="$route.name !== 'signup' & $route.name !== 'login'" />
-  <main>
+  <HeaderConst v-if="route.name !== 'signup' && route.name !== 'login'" />
+  <main :class="(route.name !== 'signup' && route.name !== 'login') ? 'pt-40' : ''">
     <RouterView />
   </main>
-  <FooterConst v-if="$route.name !== 'signup' & $route.name !== 'login'" />
+  <FooterConst v-if="route.name !== 'signup' && route.name !== 'login'" />
 </template>
 
 <!-- <style scoped>

@@ -51,7 +51,7 @@ import { RouterLink } from 'vue-router';
                     <p class="text-gray-400">
                         Don't have an account? 
                     </p>
-                    <RouterLink to="/signup" class="text-green-400 hover:text-green-500 font-medium">Sign Up</RouterLink>
+                    <RouterLink to="/auth/signup" class="text-green-400 hover:text-green-500 font-medium">Sign Up</RouterLink>
                 </div>
                 <div class="flex items-center my-4">
                     <div class="flex-grow h-px bg-gray-600"></div>

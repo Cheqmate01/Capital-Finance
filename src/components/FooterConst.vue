@@ -42,9 +42,11 @@
               <h3 class="vollkorn-700 text-white text-2xl">Quick Links</h3>
             </template>
             <ul class="flex flex-col gap-y-3">
-              <li><a href="../?a=login" class="text-white text-sm hover:text-green-400 nav-link">Login</a></li>
-              <li><a href="../?a=signup" class="text-white text-sm hover:text-green-400 nav-link">Register</a></li>
-              <li><a href="index15a0.html?a=support" class="text-white text-sm hover:text-green-400 nav-link">Contact</a></li>
+              <li v-if="!isAuthenticated"><RouterLink to="/login" class="text-white text-sm hover:text-green-400 nav-link">Login</RouterLink></li>
+              <li v-else><RouterLink to="/" class="text-white text-sm hover:text-green-400 nav-link">Home</RouterLink></li>
+              <li v-if="!isAuthenticated"><RouterLink to="/signup" class="text-white text-sm hover:text-green-400 nav-link">Register</RouterLink></li>
+              <li v-else><RouterLink to="/about" class="text-white text-sm hover:text-green-400 nav-link">About</RouterLink></li>
+              <li><RouterLink to="/contact" class="text-white text-sm hover:text-green-400 nav-link">Contact</RouterLink></li>
             </ul>
           </FooterLink>
         </div>
@@ -99,4 +101,5 @@
 
 <script setup>
 import FooterLink from './templates/FooterLinks.vue';
+import { isAuthenticated } from '@/auth';
 </script>

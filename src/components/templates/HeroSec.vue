@@ -1,35 +1,31 @@
 <template>
-    <div class="bg-[#070024] h-dvh text-white relative">
-        <img src="@/assets/HeaderSVG-1.png" class="absolute top-10 left-1/12 w-110" alt="">
-        <div class="w-fit m-auto text-center pt-24">
+    <div class="bg-[#070024] h-dvh text-white relative overflow-hidden">
+        <img src="@/assets/HeaderSVG-1.png" class="absolute top-10 left-1/12 w-110 z-0 pointer-events-none" alt="">
+        <div class="relative z-20 flex flex-col justify-center min-h-dvh w-full text-center pt-24">
             <h1 class="text-5xl font-bold">Your Gateway to</h1>
             <h1 class="text-5xl font-bold">Global Investments</h1>
             <p class="mt-10">Achieve financial freedom starting today!</p>
-            <RouterLink to="/signup"><button class="bg-green-400 hover:bg-green-500 px-4 py-2 rounded-full mt-3 transition-colors duration-300 transition-discrete">Start Investing Now</button></RouterLink>
-            <div class="mt-12 grid-cols-4 grid gap-4">
-                <!-- TradingView Widget BEGIN -->
+            <RouterLink to="/auth/signup">
+                <button class="bg-green-400 hover:bg-green-500 px-4 py-2 rounded-full mt-3 transition-colors duration-300 transition-discrete">
+                    Start Investing Now
+                </button>
+            </RouterLink>
+            <div class="m-auto mt-12 grid grid-cols-4 gap-4 w-full max-w-5xl">
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                 </div>
-                <!-- TradingView Widget END -->
-                <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                 </div>
-                <!-- TradingView Widget END -->
-                <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                 </div>
-                <!-- TradingView Widget END -->
-                <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                 </div>
-                <!-- TradingView Widget END -->
             </div>
         </div>
-        <img src="@/assets/HeroSVG.png" class="absolute bottom-0 w-full" alt="">
+        <img src="@/assets/HeroSVG.png" class="absolute bottom-0 w-full z-10 pointer-events-none" alt="">
     </div>
 </template>
 

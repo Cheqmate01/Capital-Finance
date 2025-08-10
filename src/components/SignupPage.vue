@@ -63,7 +63,7 @@ import { RouterLink } from 'vue-router';
                     <p class="text-gray-400">
                         Already have an account? 
                     </p>
-                    <RouterLink to="/login" class="text-green-400 hover:text-green-500 font-medium">Log in</RouterLink>
+                    <RouterLink to="/auth/login" class="text-green-400 hover:text-green-500 font-medium">Log in</RouterLink>
                 </div>
             </div>
         </div>
