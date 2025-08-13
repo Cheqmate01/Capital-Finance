@@ -7,7 +7,7 @@
             <div class="mb-8 p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700">
                 <h2 class="text-xl lg:text-2xl font-bold mb-6 text-white">Portfolio Growth</h2>
                 <div class="w-full h-80">
-                    <!-- <RechartsLineChart :data="initialChartData" /> -->
+                    <DashChart />
                 </div>
             </div>
 
@@ -86,6 +86,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ref } from 'vue';
+import DashChart from './templates/DashChart.vue';
 // import { ChevronUp, ChevronDown, Check, ArrowRight, ArrowLeft } from 'lucide-vue-next';
 // import RechartsLineChart from './RechartsLineChart.vue'; // You need to create this wrapper for recharts or use a Vue chart library
 

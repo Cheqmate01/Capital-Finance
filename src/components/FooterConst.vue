@@ -1,13 +1,5 @@
 <template>
   <footer class="w-full bg-black text-gray-400">
-    <div class="">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path fill="#ffffff" fill-opacity="1"
-          d="M0,256L48,266.7C96,277,192,299,288,282.7C384,267,480,213,576,165.3C672,117,768,75,864,96C960,117,1056,203,1152,213.3C1248,224,1344,160,1392,128L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-        </path>
-      </svg>
-    </div>
-
     <div class="m-auto flex flex-col gap-10 pt-28">
       <div class="w-fit m-auto flex flex-row flex-wrap-reverse justify-center-safe gap-6">
         <div class="w-1/3 flex-none">
