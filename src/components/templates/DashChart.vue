@@ -6,10 +6,10 @@ import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, PointElement, Ca
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale)
 
 const chartData = ref({
-  labels: [ 'January', 'February', 'March' ],
+  labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July' ],
   datasets: [
     {
-      data: [40, 20, 12],
+      data: [40, 20, 12, 32, 72, 50, 60],
       fill: true,
       borderColor: '#4ade80', // green-400
       tension: 0.4,
