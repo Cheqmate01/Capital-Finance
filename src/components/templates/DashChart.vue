@@ -6,7 +6,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, PointElement, Ca
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale)
 
 const chartData = ref({
-  labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July' ],
+  labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
   datasets: [
     {
       data: [40, 20, 12, 32, 72, 50, 60],
@@ -21,6 +21,11 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+  maintainAspectRatio: false,
+  interaction: {
+    mode: 'index',
+    intersect: false
+  },
   plugins: {
     legend: { display: false },
     title: { display: false }
@@ -43,5 +48,6 @@ const chartOptions = ref({
     id="my-chart-id"
     :options="chartOptions"
     :data="chartData"
+    
   />
 </template>
