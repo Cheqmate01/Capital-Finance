@@ -1,4 +1,4 @@
-<template>
+<template v-fade-in>
     <DashboardPage />
 </template>
 

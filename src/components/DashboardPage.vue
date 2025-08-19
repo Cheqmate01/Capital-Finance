@@ -44,7 +44,7 @@
                     <h2 class="text-xl lg:text-2xl font-bold mb-4 text-white">Account Balance</h2>
                     <div class="mb-6">
                         <p class="text-lg text-gray-400">Current Balance</p>
-                        <p class="text-4xl font-extrabold text-yellow-400">$843.00</p>
+                        <p class="text-4xl font-extrabold text-yellow-400">$3843.00</p>
                     </div>
                     <div>
                         <h3 class="text-lg font-bold mb-3 text-gray-200">Recent Transactions</h3>

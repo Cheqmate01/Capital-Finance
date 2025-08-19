@@ -3,6 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import fadeIn from './directives/fade-in.js'
 
 /* add fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -16,5 +17,6 @@ library.add(fas, far, fab)
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(router)
+app.directive('fade-in', fadeIn)
 
 app.mount('#app')
