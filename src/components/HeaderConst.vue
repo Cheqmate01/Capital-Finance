@@ -17,8 +17,8 @@
         <font-awesome-icon icon="fa-solid fa-caret-down" />
         <transition name="fade">
           <div v-if="showDropdown" class="absolute right-0 top-10 mt-2 w-40 bg-white text-black rounded-lg shadow-lg py-2 z-50">
-            <RouterLink to="/profile" class="block px-4 py-2 hover:bg-green-100">Profile</RouterLink>
-            <RouterLink to="/settings" class="block px-4 py-2 hover:bg-green-100">Settings</RouterLink>
+            <RouterLink to="/profile/user" class="block px-4 py-2 hover:bg-green-100">Profile</RouterLink>
+            <RouterLink to="/settings/user" class="block px-4 py-2 hover:bg-green-100">Settings</RouterLink>
             <button class="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-600">Logout</button>
           </div>
         </transition>

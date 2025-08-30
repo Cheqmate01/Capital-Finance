@@ -78,7 +78,17 @@
                     Withdraw
                 </button>
             </div>
-
+            <div class="m-10">
+                <h4 class="text-lg font-semibold mb-2">All Transactions</h4>
+                <ul class="list-none p-0 m-0">
+                    <li v-for="tx in transactions" :key="tx.id" class="flex items-center gap-4 py-3 border-b border-gray-200 text-base">
+                        <span :class="['font-bold', tx.type === 'in' ? 'text-green-700' : 'text-red-700']">{{ tx.type }}</span>
+                        <span class="min-w-[80px]">{{ tx.amount | currency }}</span>
+                        <span class="text-gray-400 text-sm min-w-[100px]">{{ tx.date }}</span>
+                        <span class="text-gray-500 flex-1">{{ tx.description }}</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -115,4 +125,42 @@ const recentTransactions = ref([
     { id: 3, type: 'Withdraw', amount: '230.04' },
     { id: 4, type: 'Deposit', amount: '2.00' },
 ]);
+
+const transactions = [
+    {
+        id: 1,
+        type: "in",
+        amount: 500,
+        date: "2024-06-01",
+        description: "Salary",
+    },
+    {
+        id: 2,
+        type: "out",
+        amount: 120,
+        date: "2024-06-03",
+        description: "Groceries",
+    },
+    {
+        id: 3,
+        type: "in",
+        amount: 200,
+        date: "2024-06-05",
+        description: "Freelance",
+    },
+    {
+        id: 4,
+        type: "out",
+        amount: 50,
+        date: "2024-06-07",
+        description: "Transport",
+    },
+];
+
+function currency(value) {
+    return "$" + Number(value).toLocaleString();
+}
 </script>
+
+<style>
+</style>
