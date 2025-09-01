@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import UserProfile from '../views/dashboard/UserProfileView.vue'
+import UserSettings from '../views/dashboard/UserSettingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,16 +35,14 @@ const router = createRouter({
       // component: () => import('../views/ForgotPasswordView.vue'),
     },
     {
-      path: '/dashboard/:username',
+      path: '/dashboard/',
       name: 'user-dashboard',
       component: () => import('../views/DashboardView.vue'),
       meta: { requiresAuth: true },
-    },
-    {
-      path: '/profile/:username',
-      name: 'profile',
-      component: () => import('../views/ProfileView.vue'),
-      meta: { requiresAuth: true },
+      children: [
+        { path: 'profile', component: UserProfile },
+        { path: 'settings', component: UserSettings }
+      ],
     },
   ],
 })

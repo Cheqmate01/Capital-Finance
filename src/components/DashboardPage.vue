@@ -80,17 +80,30 @@
             </div>
             <div class="m-10">
                 <h4 class="text-lg font-semibold mb-2">All Transactions</h4>
-                <ul class="list-none p-0 m-0">
-                    <li v-for="tx in transactions" :key="tx.id" class="flex items-center gap-4 py-3 border-b border-gray-200 text-base">
-                        <span :class="['font-bold', tx.type === 'in' ? 'text-green-700' : 'text-red-700']">{{ tx.type }}</span>
-                        <span class="min-w-[80px]">{{ tx.amount | currency }}</span>
-                        <span class="text-gray-400 text-sm min-w-[100px]">{{ tx.date }}</span>
-                        <span class="text-gray-500 flex-1">{{ tx.description }}</span>
-                    </li>
-                </ul>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full rounded-lg overflow-hidden">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 text-left">
+                                <th class="py-3 px-4 font-semibold">Type</th>
+                                <th class="py-3 px-4 font-semibold">Amount</th>
+                                <th class="py-3 px-4 font-semibold">Date</th>
+                                <th class="py-3 px-4 font-semibold">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="tx in transactions" :key="tx.id" class="border-b border-gray-200 text-base">
+                                <td :class="['font-bold py-2 px-4', tx.type === 'in' ? 'text-green-700' : 'text-red-700']">{{ tx.type }}</td>
+                                <td class="py-2 px-4 min-w-[80px]">{{ tx.amount | currency }}</td>
+                                <td class="py-2 px-4 text-gray-400 text-sm min-w-[100px]">{{ tx.date }}</td>
+                                <td class="py-2 px-4 text-gray-500">{{ tx.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <RouterView />
 </template>
 
 <script setup>
