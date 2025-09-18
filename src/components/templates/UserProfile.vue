@@ -1,34 +1,34 @@
 <template>
-    <div class="fixed inset-0 z-50 flex items-center justify-center">
-        <div class="relative max-w-xl w-full p-8 bg-white rounded-2xl shadow-lg font-sans">
+    <div class="fixed inset-0 z-50 flex items-center justify-center px-2 sm:px-0">
+        <div class="relative w-full max-w-xs sm:max-w-xl p-2 sm:p-8 bg-white rounded-2xl shadow-lg font-sans">
             <RouterLink to="/dashboard">
-                <div class="absolute top-8 right-8 bg-white hover:bg-red-400 transition-all duration-300 rounded-full px-2 py-2.5">
-                    <font-awesome-icon icon="fa-solid fa-x" class="text-2xl text-red-500" />
+                <div class="absolute top-2 right-2 sm:top-8 sm:right-8 bg-white hover:bg-red-400 transition-all duration-300 rounded-full px-1.5 sm:px-2 py-1.5 sm:py-2.5">
+                    <font-awesome-icon icon="fa-solid fa-x" class="text-xl sm:text-2xl text-red-500" />
                 </div>
             </RouterLink>
-            <section class="flex items-center mb-8">
+            <section class="flex flex-col sm:flex-row items-center mb-4 sm:mb-8 gap-2 sm:gap-0">
                 <img
-                    class="w-28 h-28 rounded-full object-cover mr-8 border-4 border-gray-200"
+                    class="w-20 h-20 sm:w-28 sm:h-28 rounded-full object-cover mb-2 sm:mb-0 sm:mr-8 border-4 border-gray-200"
                     :src="user.profilePicture"
                     alt="Profile Picture"
                 />
-                <div class="flex-1">
-                    <h2 class="m-0 text-2xl font-bold text-gray-800">@{{ user.username }}</h2>
-                    <p class="my-1 text-gray-500">{{ user.fullName }}</p>
-                    <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-xl text-base">{{ user.category }}</span>
+                <div class="flex-1 text-center sm:text-left">
+                    <h2 class="m-0 text-lg sm:text-2xl font-bold text-gray-800">@{{ user.username }}</h2>
+                    <p class="my-1 text-xs sm:text-base text-gray-500">{{ user.fullName }}</p>
+                    <span class="inline-block bg-blue-100 text-blue-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-xl text-xs sm:text-base">{{ user.category }}</span>
                 </div>
             </section>
 
-            <section class="mt-8">
-                <h3 class="text-lg font-semibold mb-4 text-gray-800">Transaction Traffic</h3>
-                <div class="flex gap-6 mb-6">
-                    <div class="flex-1 bg-gray-100 p-6 rounded-lg text-center">
-                        <span class="block text-gray-500 text-base mb-2">Total In</span>
-                        <span class="text-xl font-bold text-green-700">{{ totalIn | currency }}</span>
+            <section class="mt-4 sm:mt-8">
+                <h3 class="text-base sm:text-lg font-semibold mb-2 sm:mb-4 text-gray-800">Transaction Traffic</h3>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6 mb-4 sm:mb-6">
+                    <div class="flex-1 bg-gray-100 p-3 sm:p-6 rounded-lg text-center">
+                        <span class="block text-gray-500 text-xs sm:text-base mb-1 sm:mb-2">Total In</span>
+                        <span class="text-base sm:text-xl font-bold text-green-700">{{ currency(totalIn) }}</span>
                     </div>
-                    <div class="flex-1 bg-gray-100 p-6 rounded-lg text-center">
-                        <span class="block text-gray-500 text-base mb-2">Total Out</span>
-                        <span class="text-xl font-bold text-red-700">{{ totalOut | currency }}</span>
+                    <div class="flex-1 bg-gray-100 p-3 sm:p-6 rounded-lg text-center">
+                        <span class="block text-gray-500 text-xs sm:text-base mb-1 sm:mb-2">Total Out</span>
+                        <span class="text-base sm:text-xl font-bold text-red-700">{{ currency(totalOut) }}</span>
                     </div>
                 </div>
             </section>
@@ -37,63 +37,58 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
-const user = {
-    profilePicture: "https://via.placeholder.com/120",
-    username: "johndoe",
-    fullName: "John Doe",
-    category: "Premium User",
-};
-
-const transactions = [
-    {
-        id: 1,
-        type: "in",
-        amount: 500,
-        date: "2024-06-01",
-        description: "Salary",
-    },
-    {
-        id: 2,
-        type: "out",
-        amount: 120,
-        date: "2024-06-03",
-        description: "Groceries",
-    },
-    {
-        id: 3,
-        type: "in",
-        amount: 200,
-        date: "2024-06-05",
-        description: "Freelance",
-    },
-    {
-        id: 4,
-        type: "out",
-        amount: 50,
-        date: "2024-06-07",
-        description: "Transport",
-    },
-];
+const user = ref({
+    profilePicture: '',
+    username: '',
+    fullName: '',
+    category: '',
+});
+const transactions = ref([]);
+const isLoading = ref(true);
+const error = ref(null);
 
 function currency(value) {
     return "$" + Number(value).toLocaleString();
 }
 
 const totalIn = computed(() =>
-    transactions
+    transactions.value
         .filter((tx) => tx.type === "in")
-        .reduce((sum, tx) => sum + tx.amount, 0)
+        .reduce((sum, tx) => sum + Number(tx.amount), 0)
 );
 
 const totalOut = computed(() =>
-    transactions
+    transactions.value
         .filter((tx) => tx.type === "out")
-        .reduce((sum, tx) => sum + tx.amount, 0)
+        .reduce((sum, tx) => sum + Number(tx.amount), 0)
 );
-</script>
 
-<style scoped>
-    /* Removed all custom styles as they have been replaced with Tailwind CSS classes */
-</style>
+onMounted(async () => {
+    isLoading.value = true;
+    error.value = null;
+    try {
+        // Fetch user (assuming single user for now)
+        const userRes = await fetch('http://localhost:8000/api/users');
+        if (!userRes.ok) throw new Error('Failed to fetch user');
+        const userData = await userRes.json();
+        // If userData is an array, use the first user
+        if (Array.isArray(userData) && userData.length > 0) {
+            user.value = userData[0];
+        } else if (userData && typeof userData === 'object') {
+            user.value = userData;
+        }
+
+        // Fetch transactions
+        const txRes = await fetch('http://localhost:8000/api/transactions');
+        if (!txRes.ok) throw new Error('Failed to fetch transactions');
+        const txData = await txRes.json();
+        transactions.value = txData;
+    } catch (e) {
+        error.value = e.message || 'Error loading data';
+    } finally {
+        isLoading.value = false;
+    }
+});
+</script>

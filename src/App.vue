@@ -8,7 +8,7 @@ const route = useRoute();
 
 <template>
   <HeaderConst v-if="route.name !== 'signup' && route.name !== 'login'" />
-  <main :class="(route.name !== 'signup' && route.name !== 'login') ? 'pt-40' : ''">
+  <main>
     <RouterView />
   </main>
   <FooterConst v-if="route.name !== 'signup' && route.name !== 'login'" />

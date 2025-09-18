@@ -1,8 +1,8 @@
 <template>
-  <footer class="w-full bg-black text-gray-400">
-    <div class="m-auto flex flex-col gap-10 pt-28">
-      <div class="w-fit m-auto flex flex-row flex-wrap-reverse justify-center-safe gap-6">
-        <div class="w-1/3 flex-none">
+  <footer class="w-full bg-black text-gray-400 text-xs sm:text-base">
+    <div class="m-auto flex flex-col gap-6 sm:gap-10 pt-16 sm:pt-28 px-2 sm:px-0">
+      <div class="w-full m-auto flex flex-col sm:flex-row flex-wrap-reverse justify-center-safe gap-4 sm:gap-6">
+        <div class="w-full sm:basis-1/3 sm:max-w-xs flex-none mb-4 sm:mb-0 order-1 sm:order-none">
           <FooterLink text="Company">
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">About Us</h3>
@@ -28,33 +28,33 @@
                           </ul-->
           </FooterLink>
         </div>
-        <div class="flex-none">
+        <div class="w-full sm:basis-1/4 sm:max-w-xs flex-none mb-4 sm:mb-0 order-2 sm:order-none">
           <FooterLink text="Quick Links">
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Quick Links</h3>
             </template>
             <ul class="flex flex-col gap-y-3">
-              <li v-if="!isAuthenticated"><RouterLink to="/login" class="text-white text-sm hover:text-green-400 nav-link">Login</RouterLink></li>
+              <li v-if="!isAuthenticated"><RouterLink to="/auth/login" class="text-white text-sm hover:text-green-400 nav-link">Login</RouterLink></li>
               <li v-else><RouterLink to="/" class="text-white text-sm hover:text-green-400 nav-link">Home</RouterLink></li>
-              <li v-if="!isAuthenticated"><RouterLink to="/signup" class="text-white text-sm hover:text-green-400 nav-link">Register</RouterLink></li>
+              <li v-if="!isAuthenticated"><RouterLink to="/auth/signup" class="text-white text-sm hover:text-green-400 nav-link">Register</RouterLink></li>
               <li v-else><RouterLink to="/about" class="text-white text-sm hover:text-green-400 nav-link">About</RouterLink></li>
               <li><RouterLink to="/contact" class="text-white text-sm hover:text-green-400 nav-link">Contact</RouterLink></li>
             </ul>
           </FooterLink>
         </div>
-        <div class="flex-none">
+        <div class="w-full sm:basis-1/4 sm:max-w-xs flex-none mb-4 sm:mb-0 order-3 sm:order-none">
           <FooterLink>
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Pages</h3>
             </template>
             <ul class="flex flex-col gap-y-3">
-              <li><a href="index3e24.html?a=company-policy" class="text-white text-sm hover:text-green-400 nav-link">Company Policy</a></li>
-              <li><a href="indexa972.html?a=rules" class="text-white text-sm hover:text-green-400 nav-link">Terms of Service</a></li>
-              <li><a href="indexff70.html?a=privacy-policy" class="text-white text-sm hover:text-green-400 nav-link">Privacy Policy</a></li>
+              <li><a class="cursor-pointer text-white text-sm hover:text-green-400 nav-link">Company Policy</a></li>
+              <li><a class="cursor-pointer text-white text-sm hover:text-green-400 nav-link">Terms of Service</a></li>
+              <li><a class="cursor-pointer text-white text-sm hover:text-green-400 nav-link">Privacy Policy</a></li>
             </ul>
           </FooterLink>
         </div>
-        <div class="w-1/5 flex-none">
+        <div class="w-full sm:basis-1/5 sm:max-w-xs flex-none mb-4 sm:mb-0 order-4 sm:order-none">
           <FooterLink>
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Contact Us</h3>
@@ -76,15 +76,13 @@
           </FooterLink>
         </div>
       </div>
-      <div class="">
-        <div class="">
-          <div class="text-center">
-            <!-- <a href="../?a=home" class="footer-logo"><img src="assets/images/logoIcon/logo.png" alt="logo"></a> -->
-          </div>
-          <hr class="border-gray-900 mx-10">
-          <div class="flex flex-row mx-12">
-            <p class="my-8">Copyright © 2024 standardcapitalfinance.org. All Rights Reserved</p>
-          </div>
+      <div>
+        <div class="text-center">
+          <!-- <a href="../?a=home" class="footer-logo"><img src="assets/images/logoIcon/logo.png" alt="logo"></a> -->
+        </div>
+        <hr class="border-gray-900 mx-2 sm:mx-10">
+        <div class="flex flex-col sm:flex-row mx-2 sm:mx-12">
+          <p class="my-4 sm:my-8 text-center">Copyright © 2024 standardcapitalfinance.org. All Rights Reserved</p>
         </div>
       </div>
     </div>

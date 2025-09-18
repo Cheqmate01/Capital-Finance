@@ -1,6 +1,8 @@
-<template style="margin-top: 150px;">
+<template>
   <HeroSec />
   <InvitationSec />
+  <img src="@/assets/InvitationSVG1.png" class="w-full -mb-1 pointer-events-none" alt="">
+  <AdSec />
   <StepSec />
   <!-- <div>
     <div class="h-[250px] bg-black">
@@ -15,4 +17,5 @@ import HeroSec from './templates/HeroSec.vue';
 import InvitationSec from './templates/InvitationSec.vue';
 import StepSec from './templates/StepSec.vue';
 import PartenerSec from './templates/PartenerSec.vue';
+import AdSec from './templates/AdSec.vue';
 </script>

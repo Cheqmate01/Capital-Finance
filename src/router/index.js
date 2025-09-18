@@ -44,6 +44,21 @@ const router = createRouter({
         { path: 'settings', component: UserSettings }
       ],
     },
+    {
+      path: '/busboard/',
+      name: 'business-dashboard',
+      component: () => import('../views/BusboardView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/transactions',
+      name: 'transactions',
+      meta: { requiresAuth: true },
+      children: [
+        {path: 'deposit', component: () => import('../views/transactions/DepositView.vue')},
+        {path: 'withdrawal', component: () => import('../views/transactions/WithdrawalView.vue')}
+      ]
+    },
   ],
 })
 

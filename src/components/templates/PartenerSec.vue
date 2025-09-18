@@ -1,8 +1,8 @@
 <template>
-    <div class="py-20 bg-white">
+    <div class="py-20 bg-[#070024]">
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-gray-800">Our Partners</h2>
+                <div class="text-center mb-4 sm:mb-10">
+                    <h2 class="text-xl sm:text-3xl text-white md:text-4xl font-bold mb-8 sm:mb-12">Our Partners</h2>
             </div>
             <div class="flex flex-row flex-wrap justify-center gap-8">
                 <div class="flex items-center justify-center">

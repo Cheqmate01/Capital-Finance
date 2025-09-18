@@ -1,27 +1,32 @@
 <template>
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered = true" @mouseout="isHovered = false">
-            <div class="icon-container my-4 w-fit h-fit p-2 rounded-full mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered, 'bg-white': isHovered }">
-            <font-awesome-icon icon="fa-solid fa-user-check" :class="{ 'text-white': !isHovered, 'text-green-400': isHovered }" />
+    <div class="bg-[#070024] py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl text-white md:text-4xl font-bold mb-12">How It Works</h2>
             </div>
-            <h5 class="font-bold pt-16 mb-2">Register Your Account</h5>
-            <p>Create your account today to access a world of investment opportunities and financial insights.</p>
-        </div>
-        <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered1 = true" @mouseout="isHovered1 = false">
-            <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered1, 'bg-white': isHovered1 }">
-            <font-awesome-icon icon="fa-solid fa-clipboard-check" :class="{ 'text-white': !isHovered1, 'text-green-400': isHovered1 }" />
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-4 sm:p-5 m-2 sm:m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered = true" @mouseout="isHovered = false">
+                    <div class="icon-container my-4 w-fit h-fit p-2 rounded-full mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered, 'bg-white': isHovered }">
+                    <font-awesome-icon icon="fa-solid fa-user-check" :class="{ 'text-white': !isHovered, 'text-green-400': isHovered }" />
+                    </div>
+                    <h5 class="font-bold pt-10 mb-1 sm:mb-2">Register Your Account</h5>
+                    <p class="text-xs sm:text-base">Create your account today to access a world of investment opportunities and financial insights.</p>
+                </div>
+                <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered1 = true" @mouseout="isHovered1 = false">
+                    <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered1, 'bg-white': isHovered1 }">
+                    <font-awesome-icon icon="fa-solid fa-clipboard-check" :class="{ 'text-white': !isHovered1, 'text-green-400': isHovered1 }" />
+                    </div>
+                    <h5 class="font-bold pt-16 mb-2">Choose Your Investment Plan</h5>
+                    <p>Select from a variety of investment plans tailored to your financial goals and risk appetite.</p>
+                </div>
+                <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered2 = true" @mouseout="isHovered2 = false">
+                    <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered2, 'bg-white': isHovered2 }">
+                    <font-awesome-icon icon="fa-solid fa-chart-line" :class="{ 'text-white': !isHovered2, 'text-green-400': isHovered2 }" />
+                    </div>
+                    <h5 class="font-bold pt-16 mb-2">Watch Your Portfolio Grow</h5>
+                    <p>Monitor your investments and watch your portfolio grow with our advanced tracking tools and insights.</p>
+                </div>
             </div>
-            <h5 class="font-bold pt-16 mb-2">Choose Your Investment Plan</h5>
-            <p>Select from a variety of investment plans tailored to your financial goals and risk appetite.</p>
-        </div>
-        <div class="border border-gray-700 transform hover:-translate-y-3 bg-gray-900 hover:bg-gray-800 card text-white p-5 m-3 text-center rounded-xl shadow-lg relative transition-all duration-300" @mouseover="isHovered2 = true" @mouseout="isHovered2 = false">
-            <div class="icon-container my-4 w-fit h-fit p-2 icon rounded-full items-center mx-auto font-bold" :class="{ 'bg-gray-600': !isHovered2, 'bg-white': isHovered2 }">
-            <font-awesome-icon icon="fa-solid fa-chart-line" :class="{ 'text-white': !isHovered2, 'text-green-400': isHovered2 }" />
-            </div>
-            <h5 class="font-bold pt-16 mb-2">Watch Your Portfolio Grow</h5>
-            <p>Monitor your investments and watch your portfolio grow with our advanced tracking tools and insights.</p>
-        </div>
         </div>
     </div>
 </template>
