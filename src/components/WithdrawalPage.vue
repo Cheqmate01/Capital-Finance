@@ -146,6 +146,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { getAccessToken, refreshToken, logout } from '@/auth';
 
 const requestStatus = ref(false)
 const confirmStatus = ref(false)
@@ -163,14 +164,12 @@ let messageTimeout = null
 
 onMounted(async () => {
   try {
-    // Fetch available withdrawal currencies from API (wallets endpoint)
-    const res = await fetch('http://localhost:8000/api/wallets');
+    const res = await apiFetch('http://localhost:8000/api/wallets');
     if (res.ok) {
       const data = await res.json();
-      // Extract unique currency names
       currencies.value = [...new Set(data.map(w => w.currency))];
     } else {
-      currencies.value = ['USDT TRC20', 'BTC', 'ETH']; // fallback
+      currencies.value = ['USDT TRC20', 'BTC', 'ETH'];
     }
   } catch {
     currencies.value = ['USDT TRC20', 'BTC', 'ETH'];

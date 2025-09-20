@@ -1,8 +1,9 @@
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { setTokens, isAuthenticated } from '@/auth';
 
-const email = ref('');
+const username = ref('');
 const password = ref('');
 const loading = ref(false);
 const error = ref('');
@@ -13,17 +14,20 @@ async function handleLogin(e) {
     loading.value = true;
     error.value = '';
     try {
-        const res = await fetch('http://localhost:8000/api/auth/login', {
+        const res = await fetch('http://localhost:8000/api/auth/token/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.value, password: password.value })
+            body: JSON.stringify({ username: username.value, password: password.value })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || data.message || 'Login failed');
-        // Store token or user info as needed (localStorage/sessionStorage)
-        if (data.token) localStorage.setItem('token', data.token);
-        // Redirect to dashboard or home
-        router.push('/dashboard');
+        if (data.access && data.refresh) {
+            setTokens(data.access, data.refresh);
+            isAuthenticated.value = true;
+            router.push('/dashboard');
+        } else {
+            throw new Error('Invalid token response');
+        }
     } catch (err) {
         error.value = err.message || 'Login failed';
     } finally {
@@ -48,10 +52,10 @@ async function handleLogin(e) {
                 </div>
                 <form @submit="handleLogin" class="space-y-2 sm:space-y-4">
                     <div>
-                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Email Address</label>
-                        <input type="email" name="email" id="email" autocomplete="email" required
+                        <label for="username" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Username</label>
+                        <input type="text" name="username" id="username" autocomplete="username" required
                             class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
-                            placeholder="you@example.com" v-model="email">
+                            placeholder="yourusername" v-model="username">
                     </div>
                     <div>
                         <label for="password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Password</label>

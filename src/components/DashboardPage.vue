@@ -109,11 +109,12 @@
 </template>
 
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { ref, onMounted } from 'vue';
-import DashChart from './templates/DashChart.vue';
+import { getAccessToken, refreshToken, logout } from '@/auth';
 // import { ChevronUp, ChevronDown, Check, ArrowRight, ArrowLeft } from 'lucide-vue-next';
 // import RechartsLineChart from './RechartsLineChart.vue'; // You need to create this wrapper for recharts or use a Vue chart library
+import { ref, onMounted } from 'vue';
+import DashChart from './templates/DashChart.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const initialChartData = ref([
     { name: 'Jan', value: 4000 },
@@ -142,27 +143,26 @@ onMounted(async () => {
     error.value = null;
     try {
         // Fetch transactions
-        const txRes = await fetch('http://localhost:8000/api/transactions');
+        const txRes = await apiFetch('http://localhost:8000/api/transactions');
         if (!txRes.ok) throw new Error('Failed to fetch transactions');
         const txData = await txRes.json();
+        console.log('Transactions API response:', txData);
         transactions.value = txData;
         recentTransactions.value = txData.slice(-4).reverse();
 
         // Fetch balances
-        const balRes = await fetch('http://localhost:8000/api/balances');
+        const balRes = await apiFetch('http://localhost:8000/api/balances');
         if (!balRes.ok) throw new Error('Failed to fetch balances');
         const balData = await balRes.json();
-        // Sum all balances for total
+        console.log('Balances API response:', balData);
         balance.value = Array.isArray(balData) ? balData.reduce((sum, b) => sum + (Number(b.balance) || 0), 0) : 0;
-
-        // Dynamically build marketData from balances
         marketData.value = Array.isArray(balData)
             ? balData.map(b => ({
                 ticker: b.currency,
-                name: b.currency, // Optionally map to full names
+                name: b.currency,
                 price: Number(b.balance).toFixed(4),
-                change: 0, // Placeholder, add logic if you have it
-                isPositive: true // Placeholder, add logic if you have it
+                change: 0,
+                isPositive: true
             }))
             : [];
     } catch (e) {

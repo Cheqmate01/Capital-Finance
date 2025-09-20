@@ -1,9 +1,10 @@
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { setTokens, isAuthenticated } from '@/auth';
 
 const fullName = ref('');
-const email = ref('');
+const username = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const loading = ref(false);
@@ -22,14 +23,24 @@ async function handleSignup(e) {
         const res = await fetch('http://localhost:8000/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ full_name: fullName.value, email: email.value, password: password.value })
+            body: JSON.stringify({ full_name: fullName.value, username: username.value, password: password.value })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || data.message || 'Signup failed');
-        // Store token or user info as needed (localStorage/sessionStorage)
-        if (data.token) localStorage.setItem('token', data.token);
-        // Redirect to dashboard or home
-        router.push('/dashboard');
+        // After signup, auto-login using JWT
+        const loginRes = await fetch('http://localhost:8000/api/auth/token/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username.value, password: password.value })
+        });
+        const loginData = await loginRes.json();
+        if (loginRes.ok && loginData.access && loginData.refresh) {
+            setTokens(loginData.access, loginData.refresh);
+            isAuthenticated.value = true;
+            router.push('/dashboard');
+        } else {
+            throw new Error('Auto-login failed after signup');
+        }
     } catch (err) {
         error.value = err.message || 'Signup failed';
     } finally {
@@ -60,10 +71,10 @@ async function handleSignup(e) {
                             placeholder="John Doe" v-model="fullName">
                     </div>
                     <div>
-                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Email Address</label>
-                        <input type="email" name="email" id="email" autocomplete="email" required
+                        <label for="username" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Username</label>
+                        <input type="text" name="username" id="username" autocomplete="username" required
                             class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
-                            placeholder="you@example.com" v-model="email">
+                            placeholder="yourusername" v-model="username">
                     </div>
                     <div>
                         <label for="password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Password</label>

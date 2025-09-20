@@ -149,6 +149,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { getAccessToken, refreshToken, logout } from '@/auth';
 
 const requestStatus = ref(false)
 const confirmStatus = ref(false)
@@ -170,7 +171,7 @@ onMounted(async () => {
     isLoading.value = true;
     error.value = null;
     try {
-        const res = await fetch('http://localhost:8000/api/wallets');
+        const res = await apiFetch('http://localhost:8000/api/wallets');
         if (!res.ok) throw new Error('Failed to fetch wallets');
         const data = await res.json();
         wallets.value = data;

@@ -59,6 +59,11 @@ const router = createRouter({
         {path: 'withdrawal', component: () => import('../views/transactions/WithdrawalView.vue')}
       ]
     },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/ContactView.vue'),
+    },
   ],
 })
 

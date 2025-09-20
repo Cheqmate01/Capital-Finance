@@ -7,11 +7,11 @@ const route = useRoute();
 </script>
 
 <template>
-  <HeaderConst v-if="route.name !== 'signup' && route.name !== 'login'" />
+  <HeaderConst v-if="route.name !== 'signup' && route.name !== 'login' && route.name !== 'contact'" />
   <main>
     <RouterView />
   </main>
-  <FooterConst v-if="route.name !== 'signup' && route.name !== 'login'" />
+  <FooterConst v-if="route.name !== 'signup' && route.name !== 'login' && route.name !== 'contact'" />
 </template>
 
 <!-- <style scoped>

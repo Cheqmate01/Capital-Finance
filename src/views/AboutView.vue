@@ -92,8 +92,15 @@ export default {
     };
   },
   mounted() {
+    const accessToken = localStorage.getItem('token');
+    const authHeader = accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {};
     // Fetch FAQs
-    fetch('http://localhost:8000/api/faqs/')
+    fetch('http://localhost:8000/api/faqs/', {
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader
+      }
+    })
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch FAQs');
         return res.json();
@@ -107,7 +114,12 @@ export default {
         this.faqs = [];
       });
     // Fetch Testimonials
-    fetch('http://localhost:8000/api/testimonials/')
+    fetch('http://localhost:8000/api/testimonials/', {
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader
+      }
+    })
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch testimonials');
         return res.json();

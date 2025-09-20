@@ -38,6 +38,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { getAccessToken, refreshToken, logout } from '@/auth';
 
 const user = ref({
     profilePicture: '',
@@ -68,12 +69,28 @@ const totalOut = computed(() =>
 onMounted(async () => {
     isLoading.value = true;
     error.value = null;
+    const authHeader = () => ({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getAccessToken()}`
+    });
     try {
-        // Fetch user (assuming single user for now)
-        const userRes = await fetch('http://localhost:8000/api/users');
+        // Fetch user
+        let userRes = await fetch('http://localhost:8000/api/users', {
+            headers: authHeader()
+        });
+        if (userRes.status === 401) {
+            const newToken = await refreshToken();
+            if (newToken) {
+                userRes = await fetch('http://localhost:8000/api/users', {
+                    headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
+                });
+            } else {
+                logout();
+                return;
+            }
+        }
         if (!userRes.ok) throw new Error('Failed to fetch user');
         const userData = await userRes.json();
-        // If userData is an array, use the first user
         if (Array.isArray(userData) && userData.length > 0) {
             user.value = userData[0];
         } else if (userData && typeof userData === 'object') {
@@ -81,7 +98,20 @@ onMounted(async () => {
         }
 
         // Fetch transactions
-        const txRes = await fetch('http://localhost:8000/api/transactions');
+        let txRes = await fetch('http://localhost:8000/api/transactions', {
+            headers: authHeader()
+        });
+        if (txRes.status === 401) {
+            const newToken = await refreshToken();
+            if (newToken) {
+                txRes = await fetch('http://localhost:8000/api/transactions', {
+                    headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
+                });
+            } else {
+                logout();
+                return;
+            }
+        }
         if (!txRes.ok) throw new Error('Failed to fetch transactions');
         const txData = await txRes.json();
         transactions.value = txData;
