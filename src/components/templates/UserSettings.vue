@@ -91,9 +91,10 @@ onMounted(async () => {
         'Authorization': `Bearer ${getAccessToken()}`
     });
     try {
-        let userRes = await fetch('http://localhost:8000/api/users', {
-            headers: authHeader()
-        });
+        // let userRes = await fetch('http://localhost:8000/api/users', {
+        //     headers: authHeader()
+        // });
+        let userRes = await apiFetch('http://localhost:8000/api/users/');
         if (userRes.status === 401) {
             const newToken = await refreshToken();
             if (newToken) {

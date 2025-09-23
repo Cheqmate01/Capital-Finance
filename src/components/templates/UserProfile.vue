@@ -38,7 +38,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 import { getAccessToken, refreshToken, logout } from '@/auth';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const user = ref({
     profilePicture: '',
@@ -66,55 +68,47 @@ const totalOut = computed(() =>
         .reduce((sum, tx) => sum + Number(tx.amount), 0)
 );
 
-onMounted(async () => {
-    isLoading.value = true;
-    error.value = null;
+const apiFetch = async (url) => {
     const authHeader = () => ({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${getAccessToken()}`
     });
-    try {
-        // Fetch user
-        let userRes = await fetch('http://localhost:8000/api/users', {
+
+    let res = await fetch(url, {
             headers: authHeader()
         });
-        if (userRes.status === 401) {
+    if (res.status === 401) {
             const newToken = await refreshToken();
             if (newToken) {
-                userRes = await fetch('http://localhost:8000/api/users', {
+            res = await fetch(url, {
                     headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
                 });
             } else {
                 logout();
-                return;
+            throw new Error('Unauthorized and failed to refresh token');
             }
-        }
-        if (!userRes.ok) throw new Error('Failed to fetch user');
-        const userData = await userRes.json();
-        if (Array.isArray(userData) && userData.length > 0) {
-            user.value = userData[0];
-        } else if (userData && typeof userData === 'object') {
-            user.value = userData;
         }
 
-        // Fetch transactions
-        let txRes = await fetch('http://localhost:8000/api/transactions', {
-            headers: authHeader()
-        });
-        if (txRes.status === 401) {
-            const newToken = await refreshToken();
-            if (newToken) {
-                txRes = await fetch('http://localhost:8000/api/transactions', {
-                    headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
-                });
-            } else {
-                logout();
-                return;
-            }
+    if (!res.ok) {
+        throw new Error(`Failed to fetch ${url}`);
+    }
+    return await res.json();
+};
+
+onMounted(async () => {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+        let userRes = await apiFetch('http://localhost:8000/api/users/');
+        let txRes = await apiFetch('http://localhost:8000/api/transactions/');
+        if (Array.isArray(userRes) && userRes.length > 0) {
+            user.value = userRes[0];
+        } else if (userRes && typeof userRes === 'object') {
+            user.value = userRes;
         }
-        if (!txRes.ok) throw new Error('Failed to fetch transactions');
-        const txData = await txRes.json();
-        transactions.value = txData;
+
+        transactions.value = txRes;
     } catch (e) {
         error.value = e.message || 'Error loading data';
     } finally {

@@ -13,9 +13,9 @@
 
             <!-- Market Quotes & Account Balance Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-6 mb-4 sm:mb-8">
-                <!-- Market Quotes Grid -->
+                <!-- Wallet Balances -->
                 <div class="lg:col-span-2">
-                    <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-4 text-white">Live Market Quotes</h2>
+                    <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-4 text-white">Wallet Quotes</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
                         <div v-for="item in marketData" :key="item.ticker"
                             class="flex items-center justify-between p-2 sm:p-4 bg-gray-950 rounded-xl shadow-md border border-gray-700 hover:bg-gray-700 transition-colors cursor-pointer text-xs sm:text-base">
@@ -115,16 +115,7 @@ import { getAccessToken, refreshToken, logout } from '@/auth';
 import { ref, onMounted } from 'vue';
 import DashChart from './templates/DashChart.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-const initialChartData = ref([
-    { name: 'Jan', value: 4000 },
-    { name: 'Feb', value: 3000 },
-    { name: 'Mar', value: 5000 },
-    { name: 'Apr', value: 4500 },
-    { name: 'May', value: 6500 },
-    { name: 'Jun', value: 6000 },
-    { name: 'Jul', value: 8000 },
-]);
+import { apiFetch } from '@/auth';
 
 const marketData = ref([]);
 
@@ -143,7 +134,7 @@ onMounted(async () => {
     error.value = null;
     try {
         // Fetch transactions
-        const txRes = await apiFetch('http://localhost:8000/api/transactions');
+        const txRes = await apiFetch('http://localhost:8000/api/transactions/');
         if (!txRes.ok) throw new Error('Failed to fetch transactions');
         const txData = await txRes.json();
         console.log('Transactions API response:', txData);
@@ -151,7 +142,7 @@ onMounted(async () => {
         recentTransactions.value = txData.slice(-4).reverse();
 
         // Fetch balances
-        const balRes = await apiFetch('http://localhost:8000/api/balances');
+        const balRes = await apiFetch('http://localhost:8000/api/balances/');
         if (!balRes.ok) throw new Error('Failed to fetch balances');
         const balData = await balRes.json();
         console.log('Balances API response:', balData);
