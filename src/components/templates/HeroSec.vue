@@ -2,8 +2,8 @@
     <div class="hero-section bg-[#070024] h-dvh text-white relative overflow-hidden px-0">
         <img src="@/assets/HeaderSVG-1.png" class="absolute hidden sm:block top-4 sm:top-10 sm:left-1/12 w-40 sm:w-110 z-0 pointer-events-none" alt="">
         <div class="relative z-20 flex flex-col justify-center min-h-[60vh] sm:min-h-dvh w-full text-center pt-16 sm:pt-24">
-            <h1 class="text-2xl sm:text-5xl font-bold">Your Gateway to</h1>
-            <h1 class="text-2xl sm:text-5xl font-bold">Global Investments</h1>
+            <h1 class="text-3xl sm:text-5xl font-bold">Your Gateway to</h1>
+            <h1 class="text-3xl sm:text-5xl font-bold">Global Investments</h1>
             <p class="mt-4 sm:mt-10 text-xs sm:text-base">Achieve financial freedom starting today!</p>
             <RouterLink to="/auth/signup">
                 <button class="btn bg-green-400 hover:bg-green-500 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mt-2 sm:mt-3 transition-colors duration-300 transition-discrete text-xs sm:text-base">
