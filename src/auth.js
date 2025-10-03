@@ -1,6 +1,4 @@
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
 export const isAuthenticated = ref(false);
 
 // Token keys
@@ -44,7 +42,7 @@ export async function refreshToken() {
 		return null;
 	}
 	try {
-		const res = await fetch('http://localhost:8000/api/auth/token/refresh/', {
+		const res = await fetch('NightinGale.pythonanywhere.com/api/auth/token/refresh/', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ refresh })
@@ -77,12 +75,11 @@ export function isTokenExpired(token) {
 
 // Check authentication status on app load
 export function checkAuthOnLoad() {
-	const access = getAccessToken();
-	if (access && !isTokenExpired(access)) {
+	const token = getAccessToken();
+	if (token && !isTokenExpired(token)) {
 		isAuthenticated.value = true;
 	} else {
 		isAuthenticated.value = false;
-		logout();
 	}
 }
 // Centralized API fetch helper with auto token refresh

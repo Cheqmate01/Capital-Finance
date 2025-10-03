@@ -95,7 +95,7 @@ export default {
     const accessToken = localStorage.getItem('token');
     const authHeader = accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {};
     // Fetch FAQs
-    fetch('http://localhost:8000/api/faqs/', {
+    fetch('NightinGale.pythonanywhere.com/api/faqs/', {
       headers: {
         'Content-Type': 'application/json',
         ...authHeader
@@ -114,7 +114,7 @@ export default {
         this.faqs = [];
       });
     // Fetch Testimonials
-    fetch('http://localhost:8000/api/testimonials/', {
+    fetch('NightinGale.pythonanywhere.com/api/testimonials/', {
       headers: {
         'Content-Type': 'application/json',
         ...authHeader

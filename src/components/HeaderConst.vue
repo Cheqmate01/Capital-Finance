@@ -54,13 +54,6 @@
           <font-awesome-icon icon="fa-solid fa-user-tie" class="text-white text-xl sm:text-3xl drop-shadow" />
         </div>
         <font-awesome-icon icon="fa-solid fa-caret-down" class="text-xs sm:text-base" />
-        <transition name="fade">
-          <div v-if="showDropdown" class="absolute right-0 top-8 sm:top-10 mt-1 sm:mt-2 w-32 sm:w-40 bg-white text-black rounded-lg shadow-lg py-1 sm:py-2 z-50">
-            <RouterLink to="/dashboard/profile" class="block px-2 sm:px-4 py-1 sm:py-2 hover:bg-green-100 text-xs sm:text-base">Profile</RouterLink>
-            <RouterLink to="/dashboard/settings" class="block px-2 sm:px-4 py-1 sm:py-2 hover:bg-green-100 text-xs sm:text-base">Settings</RouterLink>
-            <button class="block w-full text-left px-2 sm:px-4 py-1 sm:py-2 hover:bg-red-100 text-red-600 text-xs sm:text-base">Logout</button>
-          </div>
-        </transition>
       </div>
     </div>
     <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->

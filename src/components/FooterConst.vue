@@ -1,8 +1,8 @@
 <template>
   <footer class="w-full bg-black text-gray-400 text-xs sm:text-base">
     <div class="m-auto flex flex-col gap-6 sm:gap-10 pt-16 sm:pt-28 px-2 sm:px-0">
-      <div class="w-full m-auto flex flex-col sm:flex-row flex-wrap-reverse justify-center-safe gap-4 sm:gap-6">
-        <div class="w-full sm:basis-1/3 sm:max-w-xs flex-none mb-4 sm:mb-0 order-1 sm:order-none">
+      <div class="w-full m-auto flex flex-col sm:flex-row flex-wrap justify-between gap-8 sm:gap-6 px-4 lg:px-12">
+        <div class="w-full sm:w-1/3 lg:w-1/4 flex-none mb-4 sm:mb-0">
           <FooterLink text="Company">
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">About Us</h3>
@@ -28,7 +28,7 @@
                           </ul-->
           </FooterLink>
         </div>
-        <div class="w-full sm:basis-1/4 sm:max-w-xs flex-none mb-4 sm:mb-0 order-2 sm:order-none">
+        <div class="w-full sm:w-auto flex-none mb-4 sm:mb-0">
           <FooterLink text="Quick Links">
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Quick Links</h3>
@@ -42,7 +42,7 @@
             </ul>
           </FooterLink>
         </div>
-        <div class="w-full sm:basis-1/4 sm:max-w-xs flex-none mb-4 sm:mb-0 order-3 sm:order-none">
+        <div class="w-full sm:w-auto flex-none mb-4 sm:mb-0">
           <FooterLink>
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Pages</h3>
@@ -54,7 +54,7 @@
             </ul>
           </FooterLink>
         </div>
-        <div class="w-full sm:basis-1/5 sm:max-w-xs flex-none mb-4 sm:mb-0 order-4 sm:order-none">
+        <div class="w-full sm:w-1/3 lg:w-1/4 flex-none mb-4 sm:mb-0">
           <FooterLink>
             <template #heading>
               <h3 class="vollkorn-700 text-white text-2xl">Contact Us</h3>
@@ -65,8 +65,8 @@
                 <p class="col-span-4">Hygiëastraat 10 1076 RM Amsterdam, Netherlands.</p>
               </li>
               <li class="grid grid-cols-5">
-                <font-awesome-icon icon="fa-solid fa-envelope" class="my-auto text-green-400" />
-                <p class="col-span-4 my-auto">support@fxturboinvest.org</p>
+                <font-awesome-icon icon="fa-solid fa-phone" class="my-auto text-green-400" />
+                <p class="col-span-4 my-auto">+447771107917</p>
               </li>
               <li class="grid grid-cols-5">
                 <font-awesome-icon icon="fa-solid fa-download" class="my-auto text-green-400" />

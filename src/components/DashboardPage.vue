@@ -7,35 +7,32 @@
             <div class="mb-4 sm:mb-8 p-2 sm:p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700">
                 <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-6 text-white">Portfolio Growth</h2>
                 <div class="w-full h-48 sm:h-80">
-                    <DashChart />
+                    <DashChart :chartData="portfolioHistory" />
                 </div>
             </div>
-
-            <!-- Market Quotes & Account Balance Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-6 mb-4 sm:mb-8">
-                <!-- Wallet Balances -->
+                <!-- Transactions -->
                 <div class="lg:col-span-2">
-                    <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-4 text-white">Wallet Quotes</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
-                        <div v-for="item in marketData" :key="item.ticker"
-                            class="flex items-center justify-between p-2 sm:p-4 bg-gray-950 rounded-xl shadow-md border border-gray-700 hover:bg-gray-700 transition-colors cursor-pointer text-xs sm:text-base">
-                            <div class="flex items-center">
-                                <span
-                                    :class="['h-8 w-8 sm:h-12 sm:w-12 flex items-center justify-center rounded-full text-white', item.isPositive ? 'bg-green-600' : 'bg-red-600']">
-                                    <FontAwesomeIcon :icon="item.isPositive ? 'fa-solid fa-angle-up' : 'fa-solid fa-angle-down'" :size="16" />
-                                </span>
-                                <div class="ml-2 sm:ml-4">
-                                    <p class="text-base sm:text-lg font-bold text-gray-200">{{ item.ticker }}</p>
-                                    <p class="text-xs sm:text-sm text-gray-400">{{ item.name }}</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-base sm:text-xl font-bold text-yellow-400">${{ item.price }}</p>
-                                <p :class="['text-xs sm:text-sm', item.isPositive ? 'text-green-400' : 'text-red-400']">
-                                    {{ item.isPositive ? '+' : '' }}{{ item.change }}%
-                                </p>
-                            </div>
-                        </div>
+                    <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-4 text-white">All Transactions</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full rounded-lg overflow-hidden text-xs sm:text-base">
+                            <thead>
+                                <tr class="bg-gray-100 text-gray-700 text-left">
+                                    <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Type</th>
+                                    <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Amount</th>
+                                    <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Date</th>
+                                    <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in transactions" :key="tx.id" class="border-b border-gray-200 text-xs sm:text-base">
+                                    <td :class="['font-bold py-1 sm:py-2 px-2 sm:px-4', tx.type === 'deposit' ? 'text-green-700' : 'text-red-700']">{{ tx.type }}</td>
+                                    <td class="py-1 sm:py-2 px-2 sm:px-4 min-w-[60px] sm:min-w-[80px]">{{ currency(tx.amount, tx.currency) }}</td>
+                                    <td class="py-1 sm:py-2 px-2 sm:px-4 text-gray-400 text-xs sm:text-sm min-w-[80px] sm:min-w-[100px]">{{ tx.created_at.slice(0, 10) }}</td>
+                                    <td class="py-1 sm:py-2 px-2 sm:px-4 text-gray-500">{{ tx.status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -43,8 +40,8 @@
                 <div class="lg:col-span-1 p-2 sm:p-6 bg-gray-950 rounded-2xl shadow-lg border border-gray-700">
                     <h2 class="text-base sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-4 text-white">Account Balance</h2>
                     <div class="mb-2 sm:mb-6">
-                        <p class="text-xs sm:text-lg text-gray-400">Current Balance</p>
-                        <p class="text-2xl sm:text-4xl font-extrabold text-yellow-400">${{ balance }}</p>
+                        <p class="text-xs sm:text-lg text-gray-400">Current Balance (USD)</p>
+                        <p class="text-2xl sm:text-4xl font-extrabold text-yellow-400">${{ balance.toLocaleString() }}</p>
                     </div>
                     <div>
                         <h3 class="text-xs sm:text-lg font-bold mb-1 sm:mb-3 text-gray-200">Recent Transactions</h3>
@@ -60,47 +57,26 @@
                                     </span>
                                     <span class="text-xs sm:text-sm">{{ tx.type }}</span>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-white">${{ tx.amount }}</span>
+                                <span class="text-xs sm:text-sm font-semibold text-white">{{ currency(tx.amount, tx.currency) }}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
 
-            <!-- Action Buttons Section -->
-            <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mt-2">
-                <RouterLink
-                    to="/transactions/deposit"
-                    class="px-3 sm:px-6 py-2 sm:py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base">
-                    Deposit
-                </RouterLink>
-                <RouterLink
-                    to="/transactions/withdrawal"
-                    class="px-3 sm:px-6 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-xs sm:text-base">
-                    Withdraw
-                </RouterLink>
-            </div>
-            <div class="mt-4 sm:m-10">
-                <h4 class="text-base sm:text-lg font-semibold mb-1 sm:mb-2">All Transactions</h4>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full rounded-lg overflow-hidden text-xs sm:text-base">
-                        <thead>
-                            <tr class="bg-gray-100 text-gray-700 text-left">
-                                <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Type</th>
-                                <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Amount</th>
-                                <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Date</th>
-                                <th class="py-2 sm:py-3 px-2 sm:px-4 font-semibold">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="tx in transactions" :key="tx.id" class="border-b border-gray-200 text-xs sm:text-base">
-                                <td :class="['font-bold py-1 sm:py-2 px-2 sm:px-4', tx.type === 'in' ? 'text-green-700' : 'text-red-700']">{{ tx.type }}</td>
-                                <td class="py-1 sm:py-2 px-2 sm:px-4 min-w-[60px] sm:min-w-[80px]">{{ currency(tx.amount) }}</td>
-                                <td class="py-1 sm:py-2 px-2 sm:px-4 text-gray-400 text-xs sm:text-sm min-w-[80px] sm:min-w-[100px]">{{ tx.date }}</td>
-                                <td class="py-1 sm:py-2 px-2 sm:px-4 text-gray-500">{{ tx.description }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Action Buttons Section -->
+                <div class="lg:col-3">
+                    <div class="flex justify-center flex-wrap gap-2 sm:gap-4 mt-2">
+                        <RouterLink
+                            to="/transactions/deposit"
+                            class="px-3 sm:px-6 py-2 sm:py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base">
+                            Deposit
+                        </RouterLink>
+                        <RouterLink
+                            to="/transactions/withdrawal"
+                            class="px-3 sm:px-6 py-2 sm:py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-xs sm:text-base">
+                            Withdraw
+                        </RouterLink>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,6 +94,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { apiFetch } from '@/auth';
 
 const marketData = ref([]);
+const portfolioHistory = ref([]); // Add this line
 
 const recentTransactions = ref([]);
 const transactions = ref([]);
@@ -125,28 +102,56 @@ const balance = ref(0);
 const isLoading = ref(true);
 const error = ref(null);
 
-function currency(value) {
-    return "$" + Number(value).toLocaleString();
+const currencySymbols = {
+    'BTC': 'BTC',
+    'ETH': 'ETH',
+    'USDT': 'USD',
+};
+
+function currency(value, curr = 'USD') {
+    const symbol = currencySymbols[curr] || '';
+    return Number(value).toLocaleString() + ' ' + symbol;
 }
 
 onMounted(async () => {
     isLoading.value = true;
     error.value = null;
     try {
-        // Fetch transactions
-        const txRes = await apiFetch('http://localhost:8000/api/transactions/');
+        // Using Promise.all to fetch in parallel
+        const [txRes, balRes, portfolioRes] = await Promise.all([
+            apiFetch('NightinGale.pythonanywhere.com/api/transactions/'),
+            apiFetch('NightinGale.pythonanywhere.com/api/balances/'),
+            apiFetch('NightinGale.pythonanywhere.com/api/portfolio-value-daily/')
+        ]);
+
         if (!txRes.ok) throw new Error('Failed to fetch transactions');
         const txData = await txRes.json();
-        console.log('Transactions API response:', txData);
         transactions.value = txData;
         recentTransactions.value = txData.slice(-4).reverse();
 
-        // Fetch balances
-        const balRes = await apiFetch('http://localhost:8000/api/balances/');
         if (!balRes.ok) throw new Error('Failed to fetch balances');
         const balData = await balRes.json();
-        console.log('Balances API response:', balData);
-        balance.value = Array.isArray(balData) ? balData.reduce((sum, b) => sum + (Number(b.balance) || 0), 0) : 0;
+
+        if (!portfolioRes.ok) throw new Error('Failed to fetch portfolio history');
+        portfolioHistory.value = await portfolioRes.json();
+
+        // Hardcoded rates, ideally fetched from an API
+        const rates = {
+            'USD': 1.0,
+            'BTC': 65000.0,
+            'ETH': 3500.0,
+            'USDT': 1.0,
+            'USDT TRC20': 1.0,
+        };
+
+        balance.value = Array.isArray(balData)
+            ? balData.reduce((sum, b) => {
+                const rate = rates[b.currency] || 0;
+                const usdValue = (Number(b.balance) || 0) * rate;
+                return sum + usdValue;
+            }, 0)
+            : 0;
+
         marketData.value = Array.isArray(balData)
             ? balData.map(b => ({
                 ticker: b.currency,

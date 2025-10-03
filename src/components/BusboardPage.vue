@@ -47,17 +47,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-4 sm:mb-8">
                     <div class="bg-gray-950 p-3 sm:p-6 rounded-lg sm:rounded-xl">
                         <h4 class="text-base sm:text-xl font-semibold mb-1 sm:mb-2">Portfolio Value</h4>
-                        <p class="text-lg sm:text-3xl font-bold text-green-400">$1,234,567.89</p>
+                        <p class="text-lg sm:text-3xl font-bold text-green-400">$1,234,567+</p>
                         <p class="text-gray-500 text-xs sm:text-base">+5.2% in last 30 days</p>
                     </div>
                     <div class="bg-gray-950 p-3 sm:p-6 rounded-lg sm:rounded-xl">
                         <h4 class="text-base sm:text-xl font-semibold mb-1 sm:mb-2">BTC Holdings</h4>
-                        <p class="text-lg sm:text-3xl font-bold">12.34 BTC</p>
+                        <p class="text-lg sm:text-3xl font-bold">102.34+ BTC</p>
                         <p class="text-gray-500 text-xs sm:text-base">$598,765.00</p>
                     </div>
                     <div class="bg-gray-950 p-3 sm:p-6 rounded-lg sm:rounded-xl">
                         <h4 class="text-base sm:text-xl font-semibold mb-1 sm:mb-2">Total Transactions</h4>
-                        <p class="text-lg sm:text-3xl font-bold">5,432</p>
+                        <p class="text-lg sm:text-3xl font-bold">5,432+</p>
                         <p class="text-gray-500 text-xs sm:text-base">since inception</p>
                     </div>
                     <div class="bg-gray-950 p-3 sm:p-6 rounded-lg sm:rounded-xl">
@@ -69,7 +69,7 @@
 
                 <div class="bg-gray-950 p-3 sm:p-6 rounded-lg sm:rounded-xl mb-3 sm:mb-6">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-2 sm:mb-4 gap-2 sm:gap-0">
-                        <h4 class="text-base sm:text-xl font-semibold">Recent Transaction History</h4>
+                        <h4 class="text-base sm:text-xl font-semibold">Transaction History</h4>
                         <button class="bg-gray-800 text-gray-300 py-1 sm:py-2 px-2 sm:px-4 rounded-lg hover:bg-gray-700 transition text-xs sm:text-base">
                             Download CSV
                         </button>
@@ -88,7 +88,7 @@
                             </thead>
                             <tbody>
                                 <tr class="border-b border-gray-800">
-                                    <td class="py-1 sm:py-2 px-2 sm:px-4">2025-09-01</td>
+                                    <td class="py-1 sm:py-2 px-2 sm:px-4">2011-09-01</td>
                                     <td class="py-1 sm:py-2 px-2 sm:px-4">BTC</td>
                                     <td class="py-1 sm:py-2 px-2 sm:px-4 text-green-400">Deposit</td>
                                     <td class="py-1 sm:py-2 px-2 sm:px-4">+0.5 BTC</td>
@@ -96,7 +96,7 @@
                                     <td class="py-1 sm:py-2 px-2 sm:px-4">Completed</td>
                                 </tr>
                                 <tr class="border-b border-gray-800">
-                                    <td class="py-2 px-4">2025-08-28</td>
+                                    <td class="py-2 px-4">2011-08-28</td>
                                     <td class="py-2 px-4">ETH</td>
                                     <td class="py-2 px-4 text-red-400">Withdrawal</td>
                                     <td class="py-2 px-4">-1.2 ETH</td>
@@ -104,7 +104,7 @@
                                     <td class="py-2 px-4">Completed</td>
                                 </tr>
                                 <tr class="border-b border-gray-800">
-                                    <td class="py-2 px-4">2025-08-25</td>
+                                    <td class="py-2 px-4">2011-08-25</td>
                                     <td class="py-2 px-4">USDT</td>
                                     <td class="py-2 px-4 text-green-400">Trade</td>
                                     <td class="py-2 px-4">+1500 USDT</td>

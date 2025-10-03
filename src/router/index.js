@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import UserProfile from '../views/dashboard/UserProfileView.vue'
-import UserSettings from '../views/dashboard/UserSettingsView.vue'
+import { isAuthenticated, checkAuthOnLoad } from '@/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,11 +22,13 @@ const router = createRouter({
       path: '/auth/signup',
       name: 'signup',
       component: () => import('../views/SignupView.vue'),
+      meta: { guestOnly: true }
     },
     {
       path: '/auth/login',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
+      meta: { guestOnly: true }
     },
     {
       path: '/auth/reset-password',
@@ -36,12 +37,12 @@ const router = createRouter({
     },
     {
       path: '/dashboard/',
-      name: 'user-dashboard',
+      name: 'dashboard',
       component: () => import('../views/DashboardView.vue'),
       meta: { requiresAuth: true },
       children: [
-        { path: 'profile', component: UserProfile },
-        { path: 'settings', component: UserSettings }
+        { path: 'profile', component: () => import('../views/dashboard/UserProfileView.vue') },
+        { path: 'settings', component: () => import('../views/dashboard/UserSettingsView.vue') }
       ],
     },
     {
@@ -66,5 +67,22 @@ const router = createRouter({
     },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  checkAuthOnLoad(); // Ensure auth state is fresh on every navigation
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const guestOnly = to.matched.some(record => record.meta.guestOnly);
+
+  if (requiresAuth && !isAuthenticated.value) {
+    // If route requires auth and user is not authenticated, redirect to login
+    next({ name: 'login' });
+  } else if (guestOnly && isAuthenticated.value) {
+    // If route is for guests only and user is authenticated, redirect to dashboard
+    next({ name: 'dashboard' });
+  } else {
+    // Otherwise, allow navigation
+    next();
+  }
+});
 
 export default router

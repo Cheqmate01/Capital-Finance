@@ -14,7 +14,7 @@ async function handleLogin(e) {
     loading.value = true;
     error.value = '';
     try {
-        const res = await fetch('http://localhost:8000/api/auth/token/', {
+        const res = await fetch('NightinGale.pythonanywhere.com/api/auth/token/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username.value, password: password.value })
@@ -62,17 +62,6 @@ async function handleLogin(e) {
                         <input type="password" name="password" id="password" autocomplete="new-password" required
                             class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
                             placeholder="••••••••" v-model="password">
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex items-center h-4 sm:h-5">
-                            <input id="terms" name="terms" type="checkbox" required
-                                class="h-3 w-3 sm:h-4 sm:w-4 text-green-500 bg-gray-700 border-gray-600 rounded focus:ring-green-500">
-                        </div>
-                        <div class="ml-2 text-xs sm:text-sm">
-                            <label for="terms" class="font-medium text-gray-300">
-                                I agree to the <a href="#" class="text-green-400 hover:text-green-500">Terms</a> and <a href="#" class="text-green-400 hover:text-green-500">Privacy</a>.
-                            </label>
-                        </div>
                     </div>
                     <div v-if="error" class="text-red-400 text-xs sm:text-sm text-center">{{ error }}</div>
                     <div class="m-auto">
