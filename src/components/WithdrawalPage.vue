@@ -117,7 +117,7 @@ async function submitWithdrawal() {
             address: walletAddress.value 
         };
 
-        const res = await apiFetch('NightinGale.pythonanywhere.com/api/transactions/', {
+        const res = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

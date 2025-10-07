@@ -119,9 +119,9 @@ onMounted(async () => {
     try {
         // Using Promise.all to fetch in parallel
         const [txRes, balRes, portfolioRes] = await Promise.all([
-            apiFetch('NightinGale.pythonanywhere.com/api/transactions/'),
-            apiFetch('NightinGale.pythonanywhere.com/api/balances/'),
-            apiFetch('NightinGale.pythonanywhere.com/api/portfolio-value-daily/')
+            apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/'),
+            apiFetch('https://NightinGale.pythonanywhere.com/api/balances/'),
+            apiFetch('https://NightinGale.pythonanywhere.com/api/portfolio-value-daily/')
         ]);
 
         if (!txRes.ok) throw new Error('Failed to fetch transactions');

@@ -91,14 +91,14 @@ onMounted(async () => {
         'Authorization': `Bearer ${getAccessToken()}`
     });
     try {
-        // let userRes = await fetch('NightinGale.pythonanywhere.com/api/users', {
+        // let userRes = await fetch('https://NightinGale.pythonanywhere.com/api/users', {
         //     headers: authHeader()
         // });
-        let userRes = await apiFetch('NightinGale.pythonanywhere.com/api/users/');
+        let userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/users/');
         if (userRes.status === 401) {
             const newToken = await refreshToken();
             if (newToken) {
-                userRes = await fetch('NightinGale.pythonanywhere.com/api/users', {
+                userRes = await fetch('https://NightinGale.pythonanywhere.com/api/users', {
                     headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
                 });
             } else {

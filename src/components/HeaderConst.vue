@@ -34,7 +34,7 @@
       </nav>
       <nav v-if="!isAuthenticated" class="flex flex-row justify-center gap-2 sm:gap-4 text-sm sm:text-lg">
         <RouterLink to="/" class="transform transition duration-300 hover:-translate-x-1 ease-in-out hover:text-green-400">Home</RouterLink><span>|</span>
-        <RouterLink to="/about" class="transform transition duration-300 hover:-translate-x-1 ease-in-out hover:text-green-400">About</RouterLink>
+        <RouterLink to="/about" class="transform transition duration-300 hover:translate-x-1 ease-in-out hover:text-green-400">About</RouterLink>
       </nav>
     </div>
   </header>
@@ -66,7 +66,7 @@
       </nav>
       <nav v-if="!isAuthenticated" class="flex flex-row justify-center gap-2 sm:gap-4 text-sm sm:text-lg">
         <RouterLink to="/" class="transform transition duration-300 hover:-translate-x-1 ease-in-out hover:text-green-400">Home</RouterLink><span>|</span>
-        <RouterLink to="/about" class="transform transition duration-300 hover:-translate-x-1 ease-in-out hover:text-green-400">About</RouterLink>
+        <RouterLink to="/about" class="transform transition duration-300 hover:translate-x-1 ease-in-out hover:text-green-400">About</RouterLink>
       </nav>
     </div>
   </header>

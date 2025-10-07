@@ -100,7 +100,7 @@ onMounted(async () => {
     isLoading.value = true;
     error.value = null;
     try {
-        const res = await apiFetch('NightinGale.pythonanywhere.com/api/deposit-wallets/');
+        const res = await apiFetch('https://NightinGale.pythonanywhere.com/api/deposit-wallets/');
         if (!res.ok) throw new Error('Failed to fetch wallets');
         const data = await res.json();
         wallets.value = data;
@@ -163,7 +163,7 @@ async function submitConfirmation() {
             type: 'deposit',
         };
 
-        const res = await apiFetch('NightinGale.pythonanywhere.com/api/transactions/', {
+        const res = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

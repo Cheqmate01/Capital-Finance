@@ -42,7 +42,7 @@ export async function refreshToken() {
 		return null;
 	}
 	try {
-		const res = await fetch('NightinGale.pythonanywhere.com/api/auth/token/refresh/', {
+		const res = await fetch('https://NightinGale.pythonanywhere.com/api/auth/token/refresh/', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ refresh })

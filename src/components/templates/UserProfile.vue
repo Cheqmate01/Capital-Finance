@@ -100,8 +100,8 @@ onMounted(async () => {
     error.value = null;
 
     try {
-        let userRes = await apiFetch('NightinGale.pythonanywhere.com/api/users/');
-        let txRes = await apiFetch('NightinGale.pythonanywhere.com/api/transactions/');
+        let userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/users/');
+        let txRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/');
         if (Array.isArray(userRes) && userRes.length > 0) {
             user.value = userRes[0];
         } else if (userRes && typeof userRes === 'object') {

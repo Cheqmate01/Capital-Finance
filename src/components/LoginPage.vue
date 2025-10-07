@@ -14,7 +14,7 @@ async function handleLogin(e) {
     loading.value = true;
     error.value = '';
     try {
-        const res = await fetch('NightinGale.pythonanywhere.com/api/auth/token/', {
+        const res = await fetch('https://NightinGale.pythonanywhere.com/api/auth/token/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username.value, password: password.value })

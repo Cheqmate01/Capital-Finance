@@ -20,7 +20,7 @@ async function handleSignup(e) {
     }
     loading.value = true;
     try {
-        const res = await fetch('NightinGale.pythonanywhere.com/api/auth/signup', {
+        const res = await fetch('https://NightinGale.pythonanywhere.com/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ full_name: fullName.value, username: username.value, password: password.value })
@@ -28,7 +28,7 @@ async function handleSignup(e) {
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || data.message || 'Signup failed');
         // After signup, auto-login using JWT
-        const loginRes = await fetch('NightinGale.pythonanywhere.com/api/auth/token/', {
+        const loginRes = await fetch('https://NightinGale.pythonanywhere.com/api/auth/token/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username.value, password: password.value })
