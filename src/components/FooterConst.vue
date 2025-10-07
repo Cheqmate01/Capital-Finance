@@ -66,7 +66,7 @@
               </li>
               <li class="grid grid-cols-5">
                 <font-awesome-icon icon="fa-solid fa-phone" class="my-auto text-green-400" />
-                <p class="col-span-4 my-auto">+447771107917</p>
+                <p class="col-span-4 my-auto">+44 777 110 7917</p>
               </li>
               <li class="grid grid-cols-5">
                 <font-awesome-icon icon="fa-solid fa-download" class="my-auto text-green-400" />
