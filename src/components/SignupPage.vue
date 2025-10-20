@@ -4,7 +4,9 @@ import { ref } from 'vue';
 import { setTokens, isAuthenticated } from '@/auth';
 
 const fullName = ref('');
+const email = ref('');
 const username = ref('');
+const phone = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const loading = ref(false);
@@ -23,7 +25,7 @@ async function handleSignup(e) {
         const res = await fetch('https://NightinGale.pythonanywhere.com/api/auth/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ full_name: fullName.value, username: username.value, password: password.value })
+            body: JSON.stringify({ full_name: fullName.value, email: email.value, username: username.value, phone: phone.value, password: password.value })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || data.message || 'Signup failed');
@@ -71,22 +73,38 @@ async function handleSignup(e) {
                             placeholder="John Doe" v-model="fullName">
                     </div>
                     <div>
-                        <label for="username" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Username</label>
-                        <input type="text" name="username" id="username" autocomplete="username" required
+                        <label for="email" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Email</label>
+                        <input type="email" name="email" id="email" autocomplete="email" required
                             class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
-                            placeholder="yourusername" v-model="username">
+                            placeholder="you@example.com" v-model="email">
                     </div>
-                    <div>
-                        <label for="password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Password</label>
-                        <input type="password" name="password" id="password" autocomplete="new-password" required
-                            class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
-                            placeholder="••••••••" v-model="password">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label for="username" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Username</label>
+                            <input type="text" name="username" id="username" autocomplete="username" required
+                                class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
+                                placeholder="yourusername" v-model="username">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Phone</label>
+                            <input type="tel" name="phone" id="phone" autocomplete="tel" required
+                                class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
+                                placeholder="+1234567890" v-model="phone">
+                        </div>
                     </div>
-                    <div>
-                        <label for="confirm-password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
-                        <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" required
-                            class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
-                            placeholder="••••••••" v-model="confirmPassword">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label for="password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Password</label>
+                            <input type="password" name="password" id="password" autocomplete="new-password" required
+                                class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
+                                placeholder="••••••••" v-model="password">
+                        </div>
+                        <div>
+                            <label for="confirm-password" class="block text-xs sm:text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
+                            <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" required
+                                class="w-full px-2 sm:px-3 py-1 bg-gray-700 border border-gray-600 rounded focus:ring-green-500 focus:border-green-500 text-white placeholder-gray-400 text-xs sm:text-sm"
+                                placeholder="••••••••" v-model="confirmPassword">
+                        </div>
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-4 sm:h-5">

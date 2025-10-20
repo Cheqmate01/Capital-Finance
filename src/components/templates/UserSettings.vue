@@ -7,16 +7,17 @@
                 </div>
             </RouterLink>
             <section class="flex flex-col items-center justify-center mb-4 sm:mb-8">
-                <div class="relative w-20 h-20 sm:w-28 sm:h-28">
+                <div class="relative w-20 h-20 sm:w-28 sm:h-28 cursor-pointer" @click="triggerFileInput">
                     <img
                         class="w-20 h-20 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-gray-200"
                         :src="user.profilePicture"
                         alt="Profile Picture"
                     />
-                    <span class="absolute inset-0 flex items-center justify-center">
-                        <font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-gray-700 bg-white bg-opacity-80 rounded-full p-1 sm:p-2 text-lg sm:text-xl shadow" />
+                    <span class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 rounded-full opacity-0 hover:opacity-100 transition-opacity">
+                        <font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-white text-lg sm:text-xl" />
                     </span>
                 </div>
+                <input type="file" ref="fileInput" @change="handleFileChange" class="hidden" accept="image/*">
             </section>
 
             <section class="mt-4 sm:mt-8">
@@ -31,35 +32,37 @@
                             name="username"
                             class="w-full py-1.5 sm:py-2 rounded-full font-bold pl-8 sm:pl-10 pr-6 sm:pr-8 border border-green-400 text-xs sm:text-base"
                             type="text"
-                            :value="user.username"
+                            :placeholder="user.username"
+                            readonly
                         >
                     </div>
                     <label for="name" class="ml-2 sm:ml-6 text-xs sm:text-base">Full Name</label>
-                    <input name="name" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-gray-500 text-xs sm:text-base" type="text" :value="user.fullName" readonly>
+                    <input name="name" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-gray-500 text-xs sm:text-base" type="text" v-model="user.fullName">
                     <label for="dob" class="ml-2 sm:ml-6 text-xs sm:text-base">Date of Birth</label>
-                    <input name="dob" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="date" :value="user.username">
+                    <input name="dob" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="date" v-model="user.dateOfBirth">
                 </div>
             </section>
             <section class="mt-4 sm:mt-8">
                 <h3 class="text-base sm:text-lg font-semibold mb-2 sm:mb-4 text-gray-800">Contact Information</h3>
                 <label for="email" class="ml-2 sm:ml-6 text-xs sm:text-base">Email</label>
-                <input name="email" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="email" :value="user.email">
+                <input name="email" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="email" v-model="user.email">
                 <label for="phone" class="ml-2 sm:ml-6 text-xs sm:text-base">Phone Number</label>
-                <input name="phone" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="tel" :value="user.phoneNumber">
+                <input name="phone" class="w-full py-1.5 sm:py-2 rounded-full mb-2 font-bold px-6 sm:px-8 border border-green-400 text-xs sm:text-base" type="tel" v-model="user.phoneNumber">
             </section>
             <div class="flex justify-center flex-wrap gap-2 sm:gap-4 my-4 sm:my-6">
                 <button class="px-3 sm:px-6 py-1.5 sm:py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base">
                     Change Password
                 </button>
-                <button class="px-3 sm:px-6 py-1.5 sm:py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base">
-                    Update Financial Info
-                </button>
             </div>
             <section>
                 <hr class="my-4 sm:my-6 border-gray-300">
+                <div v-if="updateStatus.message" class="text-center mb-4" :class="updateStatus.isError ? 'text-red-500' : 'text-green-500'">
+                    {{ updateStatus.message }}
+                </div>
                 <div class="mt-4 sm:mt-6 flex justify-end">
-                    <button class="px-3 sm:px-6 py-1.5 sm:py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base">
-                        Save Changes
+                    <button @click="updateUser" :disabled="isUpdating" class="px-3 sm:px-6 py-1.5 sm:py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 text-xs sm:text-base disabled:bg-gray-400">
+                        <span v-if="isUpdating">Saving...</span>
+                        <span v-else>Save Changes</span>
                     </button>
                 </div>
             </section>
@@ -68,52 +71,140 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getAccessToken, refreshToken, logout } from '@/auth';
+import { ref, onMounted, reactive } from 'vue';
+import { apiFetch, logout } from '@/auth';
 
 const user = ref({
     profilePicture: '',
-    username: '',
     fullName: '',
-    category: '',
     email: '',
     phoneNumber: '',
     dateOfBirth: '',
 });
 const isLoading = ref(true);
 const error = ref(null);
+const isUpdating = ref(false);
+const updateStatus = reactive({
+    message: '',
+    isError: false
+});
+const fileInput = ref(null);
+
+function triggerFileInput() {
+    fileInput.value?.click();
+}
+
+async function handleFileChange(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+
+    try {
+        const response = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/', {
+            method: 'PATCH',
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to upload image.');
+        }
+
+        const updatedUserData = await response.json();
+        user.value.profilePicture = updatedUserData.profile_picture || user.value.profilePicture;
+        updateStatus.message = 'Profile picture updated successfully!';
+        updateStatus.isError = false;
+    } catch (e) {
+        if (e.message === 'Session expired' || e.message === 'Authentication required') {
+            logout();
+            return;
+        }
+        updateStatus.message = e.message || 'An error occurred while uploading the image.';
+        updateStatus.isError = true;
+    } finally {
+        setTimeout(() => {
+            updateStatus.message = '';
+        }, 3000);
+    }
+}
+
+async function updateUser() {
+    isUpdating.value = true;
+    updateStatus.message = '';
+    updateStatus.isError = false;
+
+    try {
+        const response = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/', {
+            method: 'PATCH',
+            body: JSON.stringify({
+                profile_picture: user.value.profilePicture,
+                full_name: user.value.fullName,
+                email: user.value.email,
+                phone_number: user.value.phoneNumber,
+                date_of_birth: user.value.dateOfBirth,
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to update user details.');
+        }
+
+        const updatedUserData = await response.json();
+        // Map snake_case from API to camelCase in the local state
+        user.value = { 
+            ...user.value, 
+            ...{
+                ...updatedUserData,
+                profilePicture: updatedUserData.profile_picture || user.value.profilePicture,
+                fullName: updatedUserData.full_name || user.value.fullName,
+                dateOfBirth: updatedUserData.date_of_birth || user.value.dateOfBirth,
+                phoneNumber: updatedUserData.phone_number || user.value.phoneNumber
+            }
+        };
+        updateStatus.message = 'Profile updated successfully!';
+
+    } catch (e) {
+        if (e.message === 'Session expired' || e.message === 'Authentication required') {
+            logout(); // apiFetch handles logout, but we can ensure redirection here
+            return;
+        }
+        updateStatus.message = e.message || 'An error occurred while updating.';
+        updateStatus.isError = true;
+    } finally {
+        isUpdating.value = false;
+        setTimeout(() => {
+            updateStatus.message = '';
+        }, 3000);
+    }
+}
 
 onMounted(async () => {
     isLoading.value = true;
     error.value = null;
-    const authHeader = () => ({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getAccessToken()}`
-    });
+    
     try {
-        // let userRes = await fetch('https://NightinGale.pythonanywhere.com/api/users', {
-        //     headers: authHeader()
-        // });
-        let userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/users/');
-        if (userRes.status === 401) {
-            const newToken = await refreshToken();
-            if (newToken) {
-                userRes = await fetch('https://NightinGale.pythonanywhere.com/api/users', {
-                    headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
-                });
-            } else {
-                logout();
-                return;
-            }
-        }
+        // Using a more specific endpoint for the current user
+        const userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/');
+        
         if (!userRes.ok) throw new Error('Failed to fetch user');
         const userData = await userRes.json();
-        if (Array.isArray(userData) && userData.length > 0) {
-            user.value = userData[0];
-        } else if (userData && typeof userData === 'object') {
-            user.value = userData;
-        }
+        
+        user.value = {
+            ...userData,
+            profilePicture: userData.profile_picture || '',
+            fullName: userData.full_name || '',
+            dateOfBirth: userData.date_of_birth || '', // Ensure date format is YYYY-MM-DD
+            phoneNumber: userData.phone_number || ''
+        };
+
     } catch (e) {
+        if (e.message === 'Session expired' || e.message === 'Authentication required') {
+            logout();
+            return;
+        }
         error.value = e.message || 'Error loading user';
     } finally {
         isLoading.value = false;
