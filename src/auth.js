@@ -89,10 +89,14 @@ export async function apiFetch(url, options = {}) {
 		access = await refreshToken();
 		if (!access) throw new Error('Authentication required');
 	}
+	// If caller provided a FormData body, don't set Content-Type so the browser
+	// can add the correct multipart boundary. Otherwise default to JSON.
+	const isFormData = options && options.body && typeof FormData !== 'undefined' && options.body instanceof FormData;
+
 	options.headers = {
 		...(options.headers || {}),
 		'Authorization': `Bearer ${access}`,
-		'Content-Type': 'application/json',
+		...(!isFormData ? { 'Content-Type': 'application/json' } : {}),
 	};
 	let res = await fetch(url, options);
 	if (res.status === 401) {

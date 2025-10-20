@@ -108,11 +108,33 @@ async function handleFileChange(event) {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || 'Failed to upload image.');
+            let errorMessage = 'Failed to upload image.';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.detail || JSON.stringify(errorData) || errorMessage;
+            } catch (parseErr) {
+                // fallback to text if response isn't JSON
+                try {
+                    const txt = await response.text();
+                    if (txt) errorMessage = txt;
+                } catch (e) {
+                    // ignore
+                }
+            }
+            throw new Error(errorMessage);
         }
 
-        const updatedUserData = await response.json();
+        let updatedUserData = {};
+        try {
+            updatedUserData = await response.json();
+        } catch (parseErr) {
+            // If backend returned plain text or HTML, avoid crashing and treat as no-change
+            try {
+                const txt = await response.text();
+                console.warn('Expected JSON but got:', txt);
+            } catch (e) {}
+            updatedUserData = {};
+        }
         user.value.profilePicture = updatedUserData.profile_picture || user.value.profilePicture;
         updateStatus.message = 'Profile picture updated successfully!';
         updateStatus.isError = false;
@@ -148,11 +170,29 @@ async function updateUser() {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || 'Failed to update user details.');
+            let errorMessage = 'Failed to update user details.';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.detail || JSON.stringify(errorData) || errorMessage;
+            } catch (parseErr) {
+                try {
+                    const txt = await response.text();
+                    if (txt) errorMessage = txt;
+                } catch (e) {}
+            }
+            throw new Error(errorMessage);
         }
 
-        const updatedUserData = await response.json();
+        let updatedUserData = {};
+        try {
+            updatedUserData = await response.json();
+        } catch (parseErr) {
+            try {
+                const txt = await response.text();
+                console.warn('Expected JSON but got:', txt);
+            } catch (e) {}
+            updatedUserData = {};
+        }
         // Map snake_case from API to camelCase in the local state
         user.value = { 
             ...user.value, 
@@ -190,7 +230,16 @@ onMounted(async () => {
         const userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/');
         
         if (!userRes.ok) throw new Error('Failed to fetch user');
-        const userData = await userRes.json();
+        let userData = {};
+        try {
+            userData = await userRes.json();
+        } catch (parseErr) {
+            try {
+                const txt = await userRes.text();
+                console.warn('Expected JSON but got:', txt);
+            } catch (e) {}
+            throw new Error('Invalid response format from server');
+        }
         
         user.value = {
             ...userData,
