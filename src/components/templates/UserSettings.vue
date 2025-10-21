@@ -73,7 +73,6 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
 import { apiFetch, logout } from '@/auth';
-import { currentUser, setCurrentUser } from '@/stores/userStore';
 
 const user = ref({
     profilePicture: '',
@@ -151,11 +150,15 @@ async function handleFileChange(event) {
             } catch (e) {}
             updatedUserData = {};
         }
-    user.value.profilePicture = updatedUserData.profile_picture || user.value.profilePicture;
-    // Update shared store so header/profile update immediately
-    setCurrentUser({ profilePicture: user.value.profilePicture, username: user.value.username, fullName: user.value.fullName, category: user.value.category });
+        user.value.profilePicture = updatedUserData.profile_picture || user.value.profilePicture;
         updateStatus.message = 'Profile picture updated successfully!';
         updateStatus.isError = false;
+        // Notify other parts of the app (header, profile) that the profile was updated
+        try {
+            window.dispatchEvent(new CustomEvent('profile-updated', { detail: { profile_picture: user.value.profilePicture } }));
+        } catch (e) {
+            // ignore if dispatch fails
+        }
     } catch (e) {
         if (e.message === 'Session expired' || e.message === 'Authentication required') {
             logout();
@@ -242,6 +245,10 @@ async function updateUser() {
                 phoneNumber: updatedUserData.phone_number || user.value.phoneNumber
             }
         };
+        // Notify header/profile to refresh displayed avatar
+        try {
+            window.dispatchEvent(new CustomEvent('profile-updated', { detail: { profile_picture: user.value.profilePicture } }));
+        } catch (e) {}
         updateStatus.message = 'Profile updated successfully!';
 
     } catch (e) {
@@ -286,8 +293,6 @@ onMounted(async () => {
             dateOfBirth: userData.date_of_birth || '', // Ensure date format is YYYY-MM-DD
             phoneNumber: userData.phone_number || ''
         };
-        // Populate shared store
-        setCurrentUser({ profilePicture: user.value.profilePicture, username: user.value.username || userData.username, fullName: user.value.fullName, category: userData.category || '' });
 
     } catch (e) {
         if (e.message === 'Session expired' || e.message === 'Authentication required') {

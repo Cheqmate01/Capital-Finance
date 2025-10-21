@@ -75,21 +75,52 @@
 </template>
 
 <script setup>
-import { isAuthenticated, logout } from '@/auth';
+import { isAuthenticated, logout, apiFetch } from '@/auth';
 import { RouterLink } from 'vue-router';
 import { ref, onMounted, watch } from 'vue'
-import { currentUser } from '@/stores/userStore';
 
 const showDropdown = ref(false)
 const userProfilePic = ref('')
 
-// Sync with shared store
-watch(currentUser, (val) => {
-  userProfilePic.value = val && val.profilePicture ? val.profilePicture : ''
-}, { immediate: true })
+async function loadProfilePic() {
+  if (!isAuthenticated.value) {
+    userProfilePic.value = ''
+    return
+  }
+  try {
+    const res = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/');
+    if (!res || !res.ok) {
+      userProfilePic.value = ''
+      return
+    }
+    const data = await res.json().catch(() => null)
+    userProfilePic.value = data && data.profile_picture ? data.profile_picture : ''
+  } catch (e) {
+    // Don't break the header if fetching fails
+    userProfilePic.value = ''
+  }
+}
+
+onMounted(() => {
+  loadProfilePic()
+  // Listen for profile updates from other components
+  window.addEventListener('profile-updated', onProfileUpdated)
+})
 
 watch(isAuthenticated, (val) => {
-  if (!val) userProfilePic.value = ''
+  if (val) loadProfilePic()
+  else userProfilePic.value = ''
+})
+
+function onProfileUpdated(e) {
+  try {
+    const pic = e && e.detail && e.detail.profile_picture ? e.detail.profile_picture : ''
+    if (pic) userProfilePic.value = pic
+  } catch (err) {}
+}
+
+onUnmounted(() => {
+  window.removeEventListener('profile-updated', onProfileUpdated)
 })
 </script>
 

@@ -37,11 +37,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import { apiFetch, logout } from '@/auth';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { currentUser, setCurrentUser } from '@/stores/userStore';
 
 const user = ref({
     profilePicture: '',
@@ -49,12 +48,6 @@ const user = ref({
     fullName: '',
     category: '',
 });
-// Keep local user.profilePicture in sync with shared store
-watch(currentUser, (val) => {
-    if (val && val.profilePicture) {
-        user.value.profilePicture = val.profilePicture
-    }
-}, { immediate: true })
 const transactions = ref([]);
 const isLoading = ref(true);
 const error = ref(null);
@@ -103,13 +96,11 @@ onMounted(async () => {
 
         // Map user fields safely
         user.value = {
-            profilePicture: userData.profile_picture || currentUser.value.profilePicture || '',
+            profilePicture: userData.profile_picture || '',
             username: userData.username || '',
             fullName: userData.full_name || userData.fullName || '',
             category: userData.category || ''
         };
-        // Update shared store with latest data
-        setCurrentUser({ profilePicture: user.value.profilePicture, username: user.value.username, fullName: user.value.fullName, category: user.value.category });
 
         // Ensure transactions is an array (handle paginated response)
         if (Array.isArray(txData)) {
