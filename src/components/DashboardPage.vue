@@ -92,6 +92,7 @@ import { ref, onMounted } from 'vue';
 import DashChart from './templates/DashChart.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { apiFetch } from '@/auth';
+import LoadingOverlay from './templates/LoadingOverlay.vue';
 
 const marketData = ref([]);
 const portfolioHistory = ref([]); // Add this line
@@ -168,3 +169,10 @@ onMounted(async () => {
     }
 });
 </script>
+
+<template>
+    <div>
+        <LoadingOverlay v-if="isLoading" message="Loading dashboard data..." />
+        <!-- existing template is above in this file; this lower template is only to ensure the overlay is registered. -->
+    </div>
+</template>

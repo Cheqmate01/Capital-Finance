@@ -39,7 +39,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
-import { getAccessToken, refreshToken, logout } from '@/auth';
+import { apiFetch, logout } from '@/auth';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const user = ref({
@@ -68,47 +68,24 @@ const totalOut = computed(() =>
         .reduce((sum, tx) => sum + Number(tx.amount), 0)
 );
 
-const apiFetch = async (url) => {
-    const authHeader = () => ({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getAccessToken()}`
-    });
-
-    let res = await fetch(url, {
-            headers: authHeader()
-        });
-    if (res.status === 401) {
-            const newToken = await refreshToken();
-            if (newToken) {
-            res = await fetch(url, {
-                    headers: { ...authHeader(), 'Authorization': `Bearer ${newToken}` }
-                });
-            } else {
-                logout();
-            throw new Error('Unauthorized and failed to refresh token');
-            }
-        }
-
-    if (!res.ok) {
-        throw new Error(`Failed to fetch ${url}`);
-    }
-    return await res.json();
-};
-
 onMounted(async () => {
     isLoading.value = true;
     error.value = null;
-
     try {
-        let userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/users/');
-        let txRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/');
-        if (Array.isArray(userRes) && userRes.length > 0) {
-            user.value = userRes[0];
-        } else if (userRes && typeof userRes === 'object') {
-            user.value = userRes;
+        // Fetch the current user's profile and their transactions
+        const userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/');
+        const txRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/');
+
+        if (userRes && typeof userRes === 'object') {
+            user.value = {
+                profilePicture: userRes.profile_picture || '',
+                username: userRes.username || '',
+                fullName: userRes.full_name || userRes.full_name || '',
+                category: userRes.category || ''
+            };
         }
 
-        transactions.value = txRes;
+        transactions.value = txRes || [];
     } catch (e) {
         error.value = e.message || 'Error loading data';
     } finally {

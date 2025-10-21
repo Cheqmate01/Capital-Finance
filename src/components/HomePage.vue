@@ -18,4 +18,12 @@ import InvitationSec from './templates/InvitationSec.vue';
 import StepSec from './templates/StepSec.vue';
 import PartenerSec from './templates/PartenerSec.vue';
 import AdSec from './templates/AdSec.vue';
+import LoadingOverlay from './templates/LoadingOverlay.vue';
+import { ref } from 'vue';
+
+const isLoading = ref(false);
 </script>
+
+<template>
+  <LoadingOverlay v-if="isLoading" message="Loading home..." />
+</template>

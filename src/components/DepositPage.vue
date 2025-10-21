@@ -65,6 +65,7 @@
                 </div>
             </transition>
         </main>
+            <LoadingOverlay v-if="isLoading" message="Loading deposit wallets..." />
 
         <!-- Floating Message Box -->
         <transition name="fade">
@@ -86,6 +87,7 @@ const confirmCurrency = ref('')
 const confirmAmount = ref('')
 const confirmAddress = ref('')
 import DepositCard from '@/components/templates/DepositCards.vue'
+import LoadingOverlay from '@/components/templates/LoadingOverlay.vue'
 
 const wallets = ref([])
 const isLoading = ref(true)
@@ -249,6 +251,7 @@ input.hide-number-spin::-webkit-inner-spin-button {
   margin: 0;
 }
 input.hide-number-spin[type=number] {
-  -moz-appearance: textfield;
+    appearance: textfield;
+    -moz-appearance: textfield;
 }
 </style>
