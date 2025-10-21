@@ -153,12 +153,6 @@ async function handleFileChange(event) {
         user.value.profilePicture = updatedUserData.profile_picture || user.value.profilePicture;
         updateStatus.message = 'Profile picture updated successfully!';
         updateStatus.isError = false;
-        // Notify other parts of the app (header, profile) that the profile was updated
-        try {
-            window.dispatchEvent(new CustomEvent('profile-updated', { detail: { profile_picture: user.value.profilePicture } }));
-        } catch (e) {
-            // ignore if dispatch fails
-        }
     } catch (e) {
         if (e.message === 'Session expired' || e.message === 'Authentication required') {
             logout();
@@ -245,10 +239,6 @@ async function updateUser() {
                 phoneNumber: updatedUserData.phone_number || user.value.phoneNumber
             }
         };
-        // Notify header/profile to refresh displayed avatar
-        try {
-            window.dispatchEvent(new CustomEvent('profile-updated', { detail: { profile_picture: user.value.profilePicture } }));
-        } catch (e) {}
         updateStatus.message = 'Profile updated successfully!';
 
     } catch (e) {

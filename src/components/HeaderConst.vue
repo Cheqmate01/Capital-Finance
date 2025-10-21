@@ -103,24 +103,11 @@ async function loadProfilePic() {
 
 onMounted(() => {
   loadProfilePic()
-  // Listen for profile updates from other components
-  window.addEventListener('profile-updated', onProfileUpdated)
 })
 
 watch(isAuthenticated, (val) => {
   if (val) loadProfilePic()
   else userProfilePic.value = ''
-})
-
-function onProfileUpdated(e) {
-  try {
-    const pic = e && e.detail && e.detail.profile_picture ? e.detail.profile_picture : ''
-    if (pic) userProfilePic.value = pic
-  } catch (err) {}
-}
-
-onUnmounted(() => {
-  window.removeEventListener('profile-updated', onProfileUpdated)
 })
 </script>
 
