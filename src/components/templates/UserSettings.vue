@@ -111,7 +111,22 @@ async function handleFileChange(event) {
             let errorMessage = 'Failed to upload image.';
             try {
                 const errorData = await response.json();
-                errorMessage = errorData.detail || JSON.stringify(errorData) || errorMessage;
+                // Prefer normalized message, then detail, then flatten errors dict
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                } else if (errorData.detail) {
+                    errorMessage = errorData.detail;
+                } else if (errorData.errors) {
+                    // flatten errors dict into a single string
+                    const parts = [];
+                    for (const [k, v] of Object.entries(errorData.errors)) {
+                        const msg = Array.isArray(v) ? v.join(', ') : String(v);
+                        parts.push(`${k}: ${msg}`);
+                    }
+                    errorMessage = parts.join('; ');
+                } else {
+                    errorMessage = JSON.stringify(errorData) || errorMessage;
+                }
             } catch (parseErr) {
                 // fallback to text if response isn't JSON
                 try {
@@ -121,7 +136,7 @@ async function handleFileChange(event) {
                     // ignore
                 }
             }
-            throw new Error(errorMessage);
+            throw new Error(`${response.status}: ${errorMessage}`);
         }
 
         let updatedUserData = {};
@@ -146,6 +161,13 @@ async function handleFileChange(event) {
         updateStatus.message = e.message || 'An error occurred while uploading the image.';
         updateStatus.isError = true;
     } finally {
+        // Reset file input so selecting the same file again will trigger change
+        try {
+            if (fileInput.value) {
+                fileInput.value.value = '';
+            }
+        } catch (e) {}
+
         setTimeout(() => {
             updateStatus.message = '';
         }, 3000);
@@ -170,17 +192,30 @@ async function updateUser() {
         });
 
         if (!response.ok) {
-            let errorMessage = 'Failed to update user details.';
-            try {
-                const errorData = await response.json();
-                errorMessage = errorData.detail || JSON.stringify(errorData) || errorMessage;
-            } catch (parseErr) {
+                let errorMessage = 'Failed to update user details.';
                 try {
-                    const txt = await response.text();
-                    if (txt) errorMessage = txt;
-                } catch (e) {}
-            }
-            throw new Error(errorMessage);
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    } else if (errorData.detail) {
+                        errorMessage = errorData.detail;
+                    } else if (errorData.errors) {
+                        const parts = [];
+                        for (const [k, v] of Object.entries(errorData.errors)) {
+                            const msg = Array.isArray(v) ? v.join(', ') : String(v);
+                            parts.push(`${k}: ${msg}`);
+                        }
+                        errorMessage = parts.join('; ');
+                    } else {
+                        errorMessage = JSON.stringify(errorData) || errorMessage;
+                    }
+                } catch (parseErr) {
+                    try {
+                        const txt = await response.text();
+                        if (txt) errorMessage = txt;
+                    } catch (e) {}
+                }
+                throw new Error(`${response.status}: ${errorMessage}`);
         }
 
         let updatedUserData = {};
