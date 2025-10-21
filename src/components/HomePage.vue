@@ -10,6 +10,7 @@
     </div>
   </div> -->
   <PartenerSec />
+  <LoadingOverlay v-if="isLoading" message="Loading home..." />
 </template>
 
 <script setup>
@@ -24,6 +25,3 @@ import { ref } from 'vue';
 const isLoading = ref(false);
 </script>
 
-<template>
-  <LoadingOverlay v-if="isLoading" message="Loading home..." />
-</template>
