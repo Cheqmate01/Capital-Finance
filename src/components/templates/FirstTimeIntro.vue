@@ -14,21 +14,21 @@
         <div class="w-full">
           <div class="mb-4">
             <div v-if="step === 1" class="space-y-2">
-              <img src="/src/assets/HeroSVG.png" alt="Dashboard" class="mx-auto w-28 h-28 object-contain" />
+              <img src="/src/assets/FirstTimeIntro.jpg" alt="Dashboard" class="mx-auto w-28 h-28 object-contain" />
               <h3 class="font-semibold">Track your finances</h3>
               <p class="text-sm text-gray-600">View your dashboard to monitor balances, transactions, and insights.</p>
             </div>
 
             <div v-if="step === 2" class="space-y-2">
-              <img src="/src/assets/InvitationSVG1.png" alt="Transactions" class="mx-auto w-28 h-28 object-contain" />
+              <img src="/src/assets/FirstTimeIntro1.png" alt="Transactions" class="mx-auto w-28 h-28 object-contain" />
               <h3 class="font-semibold">Make deposits & withdrawals</h3>
               <p class="text-sm text-gray-600">Quickly deposit, withdraw, and manage your funds securely.</p>
             </div>
 
             <div v-if="step === 3" class="space-y-2">
-              <img src="/src/assets/HeaderSVG-1.png" alt="Security" class="mx-auto w-28 h-28 object-contain" />
+              <img src="/src/assets/FirstTimeIntro2.jpg" alt="Security" class="mx-auto w-28 h-28 object-contain" />
               <h3 class="font-semibold">Built with Vue & Django</h3>
-              <p class="text-sm text-gray-600">Front-end: Vue.js; Back-end: Django REST API. Secure auth and scalable APIs.</p>
+              <p class="text-sm text-gray-600">Front-end: Vue.js; Back-end: Django REST API. Highly secure authentication and scalable APIs.</p>
             </div>
           </div>
 
