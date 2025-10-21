@@ -82,6 +82,7 @@
         </div>
     </div>
     <RouterView />
+    <LoadingOverlay v-if="isLoading" message="Loading dashboard data..." />
 </template>
 
 <script setup>
@@ -169,10 +170,3 @@ onMounted(async () => {
     }
 });
 </script>
-
-<template>
-    <div>
-        <LoadingOverlay v-if="isLoading" message="Loading dashboard data..." />
-        <!-- existing template is above in this file; this lower template is only to ensure the overlay is registered. -->
-    </div>
-</template>
