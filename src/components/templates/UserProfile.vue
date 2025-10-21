@@ -37,10 +37,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { apiFetch, logout } from '@/auth';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { currentUser, setCurrentUser } from '@/stores/userStore';
 
 const user = ref({
     profilePicture: '',
@@ -48,6 +49,12 @@ const user = ref({
     fullName: '',
     category: '',
 });
+// Keep local user.profilePicture in sync with shared store
+watch(currentUser, (val) => {
+    if (val && val.profilePicture) {
+        user.value.profilePicture = val.profilePicture
+    }
+}, { immediate: true })
 const transactions = ref([]);
 const isLoading = ref(true);
 const error = ref(null);
@@ -74,18 +81,44 @@ onMounted(async () => {
     try {
         // Fetch the current user's profile and their transactions
         const userRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/profile/');
-        const txRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/');
-
-        if (userRes && typeof userRes === 'object') {
-            user.value = {
-                profilePicture: userRes.profile_picture || '',
-                username: userRes.username || '',
-                fullName: userRes.full_name || userRes.full_name || '',
-                category: userRes.category || ''
-            };
+        if (!userRes || !userRes.ok) {
+            const txt = userRes ? await userRes.text().catch(() => null) : null;
+            throw new Error(txt || 'Failed to load profile');
         }
+        const userData = await userRes.json().catch(async () => {
+            // If JSON parsing fails, try text for debugging
+            const t = await userRes.text().catch(() => null);
+            throw new Error(t || 'Invalid profile response');
+        });
 
-        transactions.value = txRes || [];
+        const txRes = await apiFetch('https://NightinGale.pythonanywhere.com/api/transactions/');
+        if (!txRes || !txRes.ok) {
+            const txt = txRes ? await txRes.text().catch(() => null) : null;
+            throw new Error(txt || 'Failed to load transactions');
+        }
+        const txData = await txRes.json().catch(async () => {
+            const t = await txRes.text().catch(() => null);
+            throw new Error(t || 'Invalid transactions response');
+        });
+
+        // Map user fields safely
+        user.value = {
+            profilePicture: userData.profile_picture || currentUser.value.profilePicture || '',
+            username: userData.username || '',
+            fullName: userData.full_name || userData.fullName || '',
+            category: userData.category || ''
+        };
+        // Update shared store with latest data
+        setCurrentUser({ profilePicture: user.value.profilePicture, username: user.value.username, fullName: user.value.fullName, category: user.value.category });
+
+        // Ensure transactions is an array (handle paginated response)
+        if (Array.isArray(txData)) {
+            transactions.value = txData;
+        } else if (txData && Array.isArray(txData.results)) {
+            transactions.value = txData.results;
+        } else {
+            transactions.value = [];
+        }
     } catch (e) {
         error.value = e.message || 'Error loading data';
     } finally {

@@ -10,9 +10,10 @@
         <RouterLink to="/auth/login"><button class="bg-[#505050] hover:bg-green-400 border-2 hover:text-black px-3 sm:px-5 py-0.5 sm:py-1 rounded-full transition-all duration-300 transition-discrete text-xs sm:text-base">Sign In</button></RouterLink>
         <RouterLink to="/auth/signup"><button class="bg-green-400 hover:bg-[#505050] text-black hover:text-white px-3 sm:px-5 py-0.5 sm:py-1 rounded-full transition-all duration-300 transition-discrete text-xs sm:text-base hidden sm:block">Sign Up</button></RouterLink>
       </div>
-      <div v-if="isAuthenticated" class="flex items-center gap-1 sm:gap-2 float-right relative" @mouseenter="showDropdown = true" @mouseleave="showDropdown = false">
-        <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-green-400 via-green-500 to-green-700 flex items-center justify-center shadow-lg cursor-pointer">
-          <font-awesome-icon icon="fa-solid fa-user-tie" class="text-white text-xl sm:text-3xl drop-shadow" />
+        <div v-if="isAuthenticated" class="flex items-center gap-1 sm:gap-2 float-right relative" @mouseenter="showDropdown = true" @mouseleave="showDropdown = false">
+        <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden flex items-center justify-center shadow-lg cursor-pointer bg-gray-200">
+          <img v-if="userProfilePic" :src="userProfilePic" alt="avatar" class="w-full h-full object-cover" />
+          <font-awesome-icon v-else icon="fa-solid fa-user-tie" class="text-white text-xl sm:text-3xl drop-shadow" />
         </div>
         <font-awesome-icon icon="fa-solid fa-caret-down" class="text-xs sm:text-base" />
         <transition name="fade">
@@ -50,8 +51,9 @@
         <RouterLink to="/auth/signup"><button class="bg-green-400 hover:bg-[#505050] text-black hover:text-white px-3 sm:px-5 py-0.5 sm:py-1 rounded-full transition-all duration-300 transition-discrete text-xs sm:text-base hidden sm:block">Sign Up</button></RouterLink>
       </div>
       <div v-if="isAuthenticated" class="flex items-center gap-1 sm:gap-2 float-right relative" @mouseenter="showDropdown = true" @mouseleave="showDropdown = false">
-        <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-green-400 via-green-500 to-green-700 flex items-center justify-center shadow-lg cursor-pointer">
-          <font-awesome-icon icon="fa-solid fa-user-tie" class="text-white text-xl sm:text-3xl drop-shadow" />
+        <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden flex items-center justify-center shadow-lg cursor-pointer bg-gray-200">
+          <img v-if="userProfilePic" :src="userProfilePic" alt="avatar" class="w-full h-full object-cover" />
+          <font-awesome-icon v-else icon="fa-solid fa-user-tie" class="text-white text-xl sm:text-3xl drop-shadow" />
         </div>
         <font-awesome-icon icon="fa-solid fa-caret-down" class="text-xs sm:text-base" />
       </div>
@@ -75,14 +77,20 @@
 <script setup>
 import { isAuthenticated, logout } from '@/auth';
 import { RouterLink } from 'vue-router';
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { currentUser } from '@/stores/userStore';
 
 const showDropdown = ref(false)
+const userProfilePic = ref('')
 
-function dropdown() {
-  dropdown = document.getElementsByClassName('dropdown');
-  
-}
+// Sync with shared store
+watch(currentUser, (val) => {
+  userProfilePic.value = val && val.profilePicture ? val.profilePicture : ''
+}, { immediate: true })
+
+watch(isAuthenticated, (val) => {
+  if (!val) userProfilePic.value = ''
+})
 </script>
 
 <style scoped>
