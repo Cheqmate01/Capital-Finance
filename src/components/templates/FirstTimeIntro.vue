@@ -14,7 +14,7 @@
         <div class="w-full">
           <div class="mb-4">
             <div v-if="step === 1" class="space-y-2">
-              <img src="@/assets/FirstTimeIntro.jpg" alt="Dashboard" class="mx-auto w-28 h-28 object-contain" />
+              <img src="@/assets/FirstTimeIntro.png" alt="Dashboard" class="mx-auto w-28 h-28 object-contain" />
               <h3 class="font-semibold">Track your finances</h3>
               <p class="text-sm text-gray-600">View your dashboard to monitor balances, transactions, and insights.</p>
             </div>
@@ -26,7 +26,7 @@
             </div>
 
             <div v-if="step === 3" class="space-y-2">
-              <img src="@/assets/FirstTimeIntro2.jpg" alt="Security" class="mx-auto w-28 h-28 object-contain" />
+              <img src="@/assets/FirstTimeIntro2.png" alt="Security" class="mx-auto w-28 h-28 object-contain" />
               <h3 class="font-semibold">Built with Vue & Django</h3>
               <p class="text-sm text-gray-600">Front-end: Vue.js; Back-end: Django REST API. Highly secure authentication and scalable APIs.</p>
             </div>
