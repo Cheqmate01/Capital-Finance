@@ -12,7 +12,7 @@ const route = useRoute();
     <RouterView />
   </main>
   <FooterConst v-if="route.name !== 'signup' && route.name !== 'login' && route.name !== 'contact'" />
-  {/* Elfsight WhatsApp Chat | Untitled WhatsApp Chat */}
+  <!-- Elfsight WhatsApp Chat | Untitled WhatsApp Chat 2 -->
   <script src="https://elfsightcdn.com/platform.js" async></script>
   <div class="elfsight-app-bdf67417-783d-439a-aa16-8fdca8ddad14" data-elfsight-app-lazy></div>
 </template>
