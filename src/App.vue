@@ -1,20 +1,38 @@
 <script setup>
 import { RouterView, useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import HeaderConst from './components/HeaderConst.vue';
 import FooterConst from './components/FooterConst.vue';
 
 const route = useRoute();
+const elfsightLoaded = ref(false);
+const showWhatsApp = ref(false);
+
+const excludedPages = ['signup', 'login', 'contact'];
+
+onMounted(() => {
+  // Check if Elfsight platform is available
+  if (window.eapps) {
+    elfsightLoaded.value = true;
+    showWhatsApp.value = !excludedPages.includes(route.name);
+  } else {
+    console.warn('Elfsight platform failed to load');
+  }
+});
 </script>
 
 <template>
-  <HeaderConst v-if="route.name !== 'signup' && route.name !== 'login' && route.name !== 'contact'" />
+  <HeaderConst v-if="!excludedPages.includes(route.name)" />
   <main>
     <RouterView />
   </main>
-  <FooterConst v-if="route.name !== 'signup' && route.name !== 'login' && route.name !== 'contact'" />
-  <!-- Elfsight WhatsApp Chat | Untitled WhatsApp Chat 2 -->
-  <script src="https://elfsightcdn.com/platform.js" async></script>
-  <div class="elfsight-app-bdf67417-783d-439a-aa16-8fdca8ddad14" data-elfsight-app-lazy></div>
+  <FooterConst v-if="!excludedPages.includes(route.name)" />
+  <!-- Elfsight WhatsApp Chat Widget -->
+  <div
+    v-if="showWhatsApp && elfsightLoaded"
+    class="elfsight-app-bdf67417-783d-439a-aa16-8fdca8ddad14"
+    data-elfsight-app-lazy
+  ></div>
 </template>
 
 <!-- <style scoped>
