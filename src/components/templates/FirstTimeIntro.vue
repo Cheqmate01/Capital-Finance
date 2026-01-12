@@ -9,7 +9,7 @@
 
       <section class="flex flex-col items-center text-center">
         <h2 class="text-xl sm:text-2xl font-bold mb-2">Welcome to Capital Finance</h2>
-        <p class="text-sm sm:text-base text-gray-600 mb-4">A quick tour to get you started.</p>
+        <p class="text-sm sm:text-base text-gray-600 mb-4">A quick intro to get you started.</p>
 
         <div class="w-full">
           <div class="mb-4">
